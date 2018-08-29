@@ -3,34 +3,33 @@
 # tidyverse 1.2.1
 library(tidyverse)
 
-samples <- read.table('metadata.txt', sep = " ")
-samples <- as.tibble(samples)
-samples
-colnames(samples) <- c('sample_id','total_read_bases_(bp)','total_reads', 'GC','AT','Q20','Q30')
+files <- list.files(path = '/OSM/CBR/AF_POMV/work/POMV_RNA_seq/Data/')
+files <- files[1:30]
 
-## DATA WITHOUT SAMPLE IDs ##
-samples_data <- samples[,2:7]
-samples_data
+files <- as.tibble(files)
+colnames(files) <- 'sample_id'
 
-## SAMPLE IDs without Neg controls
-samples_id_virus <- samples[4:15,1]
-samples_id_virus
+negatives <- files[13:18,1]
+pomv <- files[19:30,1]
+isav <- files[1:12,1]
 
-samples_id_virus<- samples_id_virus %>% extract(col = sample_id, into = c("treatment", "hpi", "replicate"), 
-                             regex = regex("(\\D+)(\\d+).+(\\d)"))
 
-# Neg controls IDs 
-samples_id_neg <- samples[1:3,1]
-samples_id_neg <- samples_id_neg %>% extract(col = sample_id, into = c("treatment", "hpi", "replicate"), 
-                          regex = regex("(\\D+)(.+)(\\d)")) %>% 
-                  mutate_if(is.character, str_replace_all, pattern = "R", replacement = "0")
+pomv_new <- pomv %>% extract(col = sample_id, into = c("treatment", "hpi", "replicate", "direction"), 
+                             regex = regex("([A-Z]{4})(\\d+).+(\\d)_(\\d)"))
 
-samples_id_data <- rbind(samples_id_neg, samples_id_virus)
-samples_id_data
+isav_new <- isav %>% extract(col = sample_id, into = c("treatment", "hpi", "replicate", "direction"), 
+                             regex = regex("([A-Z]{4})(\\d+).+(\\d)_(\\d)"))
 
-samples_unique_id <- samples[,1]
-samples_metadata <- cbind(samples_unique_id, samples_id_data, samples_data)   
-samples_metadata <- as.tibble(samples_metadata)
-samples_metadata
+negatives_new <- negatives %>% extract(col = sample_id, into = c("treatment", "hpi", "replicate", "direction"), 
+                                 regex = regex("(\\D+)(R)(\\d)_(\\d)")) %>%
+                                mutate_if(is.character, str_replace_all, pattern = "R", replacement = "0")
 
-write.csv(samples_metadata, "METADATA", row.names = FALSE)
+
+samples_metadata <- rbind(pomv_new, isav_new, negatives_new)
+samples_metadata <- cbind(files, samples_metadata)
+samples_metadata$hpi <- as.integer(samples_metadata$hpi)
+samples_metadata$replicate <- as.integer(samples_metadata$replicate)
+samples_metadata$direction <- as.integer(samples_metadata$direction)
+str(samples_metadata)
+
+write.csv(samples_metadata, "METADATA.csv", row.names = FALSE)
