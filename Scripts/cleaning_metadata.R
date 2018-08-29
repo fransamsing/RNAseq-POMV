@@ -25,11 +25,12 @@ samples_id_neg <- samples_id_neg %>% extract(col = sample_id, into = c("treatmen
                           regex = regex("(\\D+)(.+)(\\d)")) %>% 
                   mutate_if(is.character, str_replace_all, pattern = "R", replacement = "0")
 
-samples_id_new <- rbind(samples_id_neg, samples_id_virus)
-samples_id_new
+samples_id_data <- rbind(samples_id_neg, samples_id_virus)
+samples_id_data
 
-samples_metadata <- cbind(samples_id_new, samples_data)   
+samples_unique_id <- samples[,1]
+samples_metadata <- cbind(samples_unique_id, samples_id_data, samples_data)   
 samples_metadata <- as.tibble(samples_metadata)
 samples_metadata
 
-write.csv(samples_metadata, "metadata_clean.csv", row.names = FALSE)
+write.csv(samples_metadata, "METADATA", row.names = FALSE)
