@@ -12,23 +12,18 @@
 #SBATCH --mem=10gb
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=francisca.samsingpedrals@csiro.au
-#SBATCH --output=../Analyses/logs/slurm/*.out
+#SBATCH --output=../Analyses/logs/slurm/%A-%a.out
+#SBATCH --array=1-30
 
 #---------------------------------------------------------------#
 
 module load fastqc
 
+cd /OSM/CBR/AF_POMV/work/POMV_RNA_seq/Data/
+
 x=$(sed -n ${SLURM_ARRAY_TASK_ID}p dir_list.txt)
 echo $x
 
-rsync -a -e "ssh -i $HOME/.ssh/id_rsa_blah" blah@somewhere.nci.org.au:/g/data3/results/fastq/$x BAM_gVCF
+fastqc -o ../Analysis/FastQC/ $x
 
-
-for i in /OSM/CBR/AF_POMV/work/POMV_RNA_seq/Data/*.fastq.gz
-do
-	fastqc -o ../Analyses/FastQC/ $i
-done
-
-     
-   
 
