@@ -1,4 +1,4 @@
-"","treatment","hours_post_infection","replicate","total_read_bases_(bp)","total_reads","GC","AT","Q20","Q30"
+"","treatment","hpi","replicate","total_read_bases_(bp)","total_reads","GC","AT","Q20","Q30"
 "1","NEGcontrol","0","1","6,139,320,552","60,785,352",48.8,51.2,95.6,90.84
 "2","NEGcontrol","0","2","6,769,899,710","67,028,710",49.17,50.83,95.78,91.16
 "3","NEGcontrol","0","3","6,382,134,248","63,189,448",49.03,50.97,96.02,91.73
