@@ -6,7 +6,6 @@ library(tidyverse)
 samples <- read.table('metadata.txt', sep = " ")
 samples <- as.tibble(samples)
 samples
-
 colnames(samples) <- c('sample_id','total_read_bases_(bp)','total_reads', 'GC','AT','Q20','Q30')
 
 ## DATA WITHOUT SAMPLE IDs ##
@@ -17,12 +16,12 @@ samples_data
 samples_id_virus <- samples[4:15,1]
 samples_id_virus
 
-samples_id_virus<- samples_id_virus %>% extract(col = sample_id, into = c("treatment", "hours_post_infection", "replicate"), 
+samples_id_virus<- samples_id_virus %>% extract(col = sample_id, into = c("treatment", "hpi", "replicate"), 
                              regex = regex("(\\D+)(\\d+).+(\\d)"))
 
 # Neg controls IDs 
 samples_id_neg <- samples[1:3,1]
-samples_id_neg <- sample_id_neg %>% extract(col = sample_id, into = c("treatment", "hours_post_infection", "replicate"), 
+samples_id_neg <- samples_id_neg %>% extract(col = sample_id, into = c("treatment", "hpi", "replicate"), 
                           regex = regex("(\\D+)(.+)(\\d)")) %>% 
                   mutate_if(is.character, str_replace_all, pattern = "R", replacement = "0")
 
@@ -30,6 +29,7 @@ samples_id_new <- rbind(samples_id_neg, samples_id_virus)
 samples_id_new
 
 samples_metadata <- cbind(samples_id_new, samples_data)   
+samples_metadata <- as.tibble(samples_metadata)
 samples_metadata
 
-write.csv(samples_metadata, "metadata_clean.csv")
+write.csv(samples_metadata, "metadata_clean.csv", row.names = FALSE)
