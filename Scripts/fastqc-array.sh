@@ -18,6 +18,12 @@
 
 module load fastqc
 
+x=$(sed -n ${SLURM_ARRAY_TASK_ID}p dir_list.txt)
+echo $x
+
+rsync -a -e "ssh -i $HOME/.ssh/id_rsa_blah" blah@somewhere.nci.org.au:/g/data3/results/fastq/$x BAM_gVCF
+
+
 for i in /OSM/CBR/AF_POMV/work/POMV_RNA_seq/Data/*.fastq.gz
 do
 	fastqc -o ../Analyses/FastQC/ $i

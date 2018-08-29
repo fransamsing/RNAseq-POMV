@@ -1,0 +1,55 @@
+/cm/local/apps/slurm/var/spool/job1569732/slurm_script: line 3: runs: command not found
+Picked up _JAVA_OPTIONS: -XX:+UseSerialGC
+Started analysis of ISAV24HPIR1_1.fastq.gz
+Approx 5% complete for ISAV24HPIR1_1.fastq.gz
+Approx 10% complete for ISAV24HPIR1_1.fastq.gz
+Approx 15% complete for ISAV24HPIR1_1.fastq.gz
+Approx 20% complete for ISAV24HPIR1_1.fastq.gz
+Approx 25% complete for ISAV24HPIR1_1.fastq.gz
+Approx 30% complete for ISAV24HPIR1_1.fastq.gz
+Approx 35% complete for ISAV24HPIR1_1.fastq.gz
+Approx 40% complete for ISAV24HPIR1_1.fastq.gz
+Approx 45% complete for ISAV24HPIR1_1.fastq.gz
+Approx 50% complete for ISAV24HPIR1_1.fastq.gz
+Approx 55% complete for ISAV24HPIR1_1.fastq.gz
+Approx 60% complete for ISAV24HPIR1_1.fastq.gz
+Approx 65% complete for ISAV24HPIR1_1.fastq.gz
+Approx 70% complete for ISAV24HPIR1_1.fastq.gz
+Approx 75% complete for ISAV24HPIR1_1.fastq.gz
+Approx 80% complete for ISAV24HPIR1_1.fastq.gz
+Approx 85% complete for ISAV24HPIR1_1.fastq.gz
+Approx 90% complete for ISAV24HPIR1_1.fastq.gz
+Approx 95% complete for ISAV24HPIR1_1.fastq.gz
+Analysis complete for ISAV24HPIR1_1.fastq.gz
+Picked up _JAVA_OPTIONS: -XX:+UseSerialGC
+Started analysis of ISAV24HPIR1_2.fastq.gz
+Approx 5% complete for ISAV24HPIR1_2.fastq.gz
+Approx 10% complete for ISAV24HPIR1_2.fastq.gz
+Approx 15% complete for ISAV24HPIR1_2.fastq.gz
+Approx 20% complete for ISAV24HPIR1_2.fastq.gz
+Approx 25% complete for ISAV24HPIR1_2.fastq.gz
+Approx 30% complete for ISAV24HPIR1_2.fastq.gz
+Approx 35% complete for ISAV24HPIR1_2.fastq.gz
+Approx 40% complete for ISAV24HPIR1_2.fastq.gz
+Approx 45% complete for ISAV24HPIR1_2.fastq.gz
+Approx 50% complete for ISAV24HPIR1_2.fastq.gz
+Approx 55% complete for ISAV24HPIR1_2.fastq.gz
+Approx 60% complete for ISAV24HPIR1_2.fastq.gz
+Approx 65% complete for ISAV24HPIR1_2.fastq.gz
+Approx 70% complete for ISAV24HPIR1_2.fastq.gz
+Approx 75% complete for ISAV24HPIR1_2.fastq.gz
+Approx 80% complete for ISAV24HPIR1_2.fastq.gz
+Approx 85% complete for ISAV24HPIR1_2.fastq.gz
+Approx 90% complete for ISAV24HPIR1_2.fastq.gz
+Approx 95% complete for ISAV24HPIR1_2.fastq.gz
+Analysis complete for ISAV24HPIR1_2.fastq.gz
+Picked up _JAVA_OPTIONS: -XX:+UseSerialGC
+Started analysis of ISAV24HPIR2_1.fastq.gz
+Approx 5% complete for ISAV24HPIR2_1.fastq.gz
+Approx 10% complete for ISAV24HPIR2_1.fastq.gz
+Approx 15% complete for ISAV24HPIR2_1.fastq.gz
+Approx 20% complete for ISAV24HPIR2_1.fastq.gz
+Approx 25% complete for ISAV24HPIR2_1.fastq.gz
+Approx 30% complete for ISAV24HPIR2_1.fastq.gz
+Approx 35% complete for ISAV24HPIR2_1.fastq.gz
+slurmstepd: error: *** JOB 1569732 ON c193 CANCELLED AT 2018-08-29T16:25:14 DUE TO TIME LIMIT ***
