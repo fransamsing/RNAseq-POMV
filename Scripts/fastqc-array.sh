@@ -19,9 +19,11 @@
 
 module load fastqc
 
+awk '{print $1}' ../METADATA.txt > /OSM/CBR/AF_POMV/work/POMV_RNA_seq/Data/file_list.txt
+
 cd /OSM/CBR/AF_POMV/work/POMV_RNA_seq/Data/
 
-x=$(sed -n ${SLURM_ARRAY_TASK_ID}p dir_list.txt)
+x=$(sed -n ${SLURM_ARRAY_TASK_ID}p file_list.txt)
 echo $x
 
 fastqc -o ../Analysis/FastQC/ $x
