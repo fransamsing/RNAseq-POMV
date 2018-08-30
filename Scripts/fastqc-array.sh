@@ -12,7 +12,7 @@
 #SBATCH --mem=10gb
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=francisca.samsingpedrals@csiro.au
-#SBATCH --output=../Analyses/logs/slurm/%A-%a.out
+#SBATCH --output=slurm_%j.out
 #SBATCH --array=1-30
 
 #---------------------------------------------------------------#

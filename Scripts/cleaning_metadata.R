@@ -1,5 +1,4 @@
 ## Open Metadata and clean ## 
-
 # tidyverse 1.2.1
 library(tidyverse)
 
@@ -21,15 +20,23 @@ isav_new <- isav %>% extract(col = sample_id, into = c("treatment", "hpi", "repl
                              regex = regex("([A-Z]{4})(\\d+).+(\\d)_(\\d)"))
 
 negatives_new <- negatives %>% extract(col = sample_id, into = c("treatment", "hpi", "replicate", "direction"), 
-                                 regex = regex("(\\D+)(R)(\\d)_(\\d)")) %>%
+                                 regex = regex("(\\D+)control(R)(\\d)_(\\d)")) %>%
                                 mutate_if(is.character, str_replace_all, pattern = "R", replacement = "0")
 
 
-samples_metadata <- rbind(pomv_new, isav_new, negatives_new)
-samples_metadata <- cbind(files, samples_metadata)
-samples_metadata$hpi <- as.integer(samples_metadata$hpi)
-samples_metadata$replicate <- as.integer(samples_metadata$replicate)
-samples_metadata$direction <- as.integer(samples_metadata$direction)
-str(samples_metadata)
+samples_metadata <- rbind(isav_new, negatives_new, pomv_new)
+samples_metadata
 
-write.csv(samples_metadata, "METADATA.csv", row.names = FALSE)
+samples_metadata_final <- cbind(files, samples_metadata)
+
+str(samples_metadata_final)
+
+
+
+
+
+
+write.table(samples_metadata_final, "METADATA.txt", row.names = F, col.names=F,sep="\t", quote=FALSE)
+
+
+
