@@ -12,4 +12,4 @@
 
 files=/OSM/CBR/AF_POMV/work/POMV_RNA_seq/Data/*.fastq.gz
 
-
+for file in $files; do zcat $file | head -n 1; done
