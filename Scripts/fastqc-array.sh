@@ -1,6 +1,7 @@
 #!/bin/bash
 
-#		runs fastqc on gzipped raw data files        
+#***************************************************************#
+#		runs fastqc on gzipped raw data files           #
 #***************************************************************#
 
 #--------------------------sbatch header------------------------#
@@ -19,7 +20,7 @@
 
 module load fastqc
 
-awk '{print $1}' ../METADATA.txt > /OSM/CBR/AF_POMV/work/POMV_RNA_seq/Data/file_list.txt
+cut -d , -f 1 ../METADATA.csv | grep -v sample_id > /OSM/CBR/AF_POMV/work/POMV_RNA_seq/Data/file_list.txt
 
 cd /OSM/CBR/AF_POMV/work/POMV_RNA_seq/Data/
 

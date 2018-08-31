@@ -36,7 +36,7 @@ str(samples_metadata_final)
 
 
 
-write.table(samples_metadata_final, "METADATA.txt", row.names = F, col.names=F,sep="\t", quote=FALSE)
+write.table(samples_metadata_final, "METADATA.txt", row.names = F, sep="\t", quote=FALSE)
 
 
 
