@@ -10,7 +10,11 @@
 #***************************************************************#
 
 
+# This script gets the first field of the METADATA.csv file that
+# containes the filenames of the RNAseq-samples
+# and uses those names to loop through the files stored in the 
+# POMV_RNA_seq folder in the OSM storage 
 
-filenames="$(cut -d , -f 1 METADATA.csv | grep -v sample_id)"
+filenames="$(cut -d , -f 1 ../METADATA.csv | grep -v sample_id)"
 
-for f in $filenames;do echo $f; zcat /OSM/CBR/AF_POMV/work/POMV_RNA_seq/Data/*.fastq.gz | head -n 1 ; done
+for f in $filenames;do zcat /OSM/CBR/AF_POMV/work/POMV_RNA_seq/Data/${f} | head -n 1 ; done

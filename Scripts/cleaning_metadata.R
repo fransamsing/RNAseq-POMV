@@ -3,7 +3,7 @@
 library(tidyverse)
 
 
-raw_data <- read.csv('Raw_data_file_from_provider.txt', sep = " ", header = TRUE)
+raw_data <- read.csv('Docs/Raw_data_file_from_provider.txt', sep = " ", header = TRUE)
 raw_data <- raw_data[,1:3]
 colnames(raw_data) <- c('sample_id', 'file_size', 'md5sum')
 raw_data <- as.tibble(raw_data)
