@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #***************************************************************#
-#		runs fastqc on gzipped raw data files           #
+#               runs fastqc on gzipped raw data files           #
 #***************************************************************#
 
 #--------------------------sbatch header------------------------#
@@ -13,20 +13,24 @@
 #SBATCH --mem=10gb
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=francisca.samsingpedrals@csiro.au
-#SBATCH --output=slurm_%j.out
+#SBATCH --output=../Logs/fastqc_%A.out
 #SBATCH --array=1-30
+
+#----------------------project variables------------------------# 
+IN_DIR=/OSM/CBR/AF_POMV/work/POMV_RNA_seq/Data
+OUT_DIR=/OSM/CBR/AF_POMV/work/POMV_RNA_seq/Analysis/FastQC
 
 #---------------------------------------------------------------#
 
 module load fastqc
 
-cut -d , -f 1 ../METADATA.csv | grep -v sample_id > /OSM/CBR/AF_POMV/work/POMV_RNA_seq/Data/file_list.txt
+IN_FILE_LIST=( $(cut -d , -f 1 ../METADATA.csv | grep -v sample_id) );
 
-cd /OSM/CBR/AF_POMV/work/POMV_RNA_seq/Data/
-
-x=$(sed -n ${SLURM_ARRAY_TASK_ID}p file_list.txt)
-echo $x
-
-fastqc -o ../Analysis/FastQC/ $x
-
-
+if [ ! -z "$SLURM_ARRAY_TASK_ID" ]
+    then
+        i=$SLURM_ARRAY_TASK_ID
+        IN_FILE=${IN_DIR}/${IN_FILE_LIST[$i]}
+        fastqc ${IN_FILE} --noextract -o ${OUT_DIR}
+    else
+        echo "Error: Missing array index as SLURM_ARRAY_TASK_ID"
+fi
