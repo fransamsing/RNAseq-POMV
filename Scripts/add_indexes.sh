@@ -8,4 +8,4 @@ echo -e "index1,index2" | cat - Outputs/index_columns.csv > Outputs/index_column
 
 # To combine the index_columns1.csv with METADATA.csv
 
-paste -d, Outputs/METADATA.csv Outputs/index_columns1.csv > METADATA1.csv
+paste -d, Outputs/METADATA.csv Outputs/index_columns1.csv > METADATA_final.csv
