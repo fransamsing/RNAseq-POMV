@@ -1,0 +1,6 @@
+Sep 06 13:54:17 ..... started STAR run
+Sep 06 13:54:17 ... starting to generate Genome files
+Sep 06 13:55:20 ... starting to sort Suffix Array. This may take a long time...
+Sep 06 13:55:37 ... sorting Suffix Array chunks and saving them to disk...
+/cm/local/apps/slurm/var/spool/job2473916/slurm_script: line 37: 24013 Killed                  STAR --runMode genomeGenerate --genomeDir ${OUT_DIR}/GenomeIndex/ --runThreadN 8 --genomeChrBinNbits 14 --genomeFastaFiles ${FILE_DIR}/Genomes/Salmo_salar/GCF_000233375.1_ICSASG_v2_genomic.fna --sjdbGTFfile ${FILE_DIR}/Genomes/Salmo_salar/GCF_000233375.1_ICSASG_v2_genomic.gff --sjdbGTFtagExonParentTranscript Parent --sjdbOverhang 100 --sjdbGTFfeatureExon CDS --limitGenomeGenerateRAM=168253832576
+slurmstepd: error: Detected 1 oom-kill event(s) in step 2473916.batch cgroup.
