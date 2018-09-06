@@ -35,7 +35,7 @@ STAR \
 --sjdbOverhang 100 \
 --sjdbGTFfeatureExon CDS \
 --limitGenomeGenerateRAM=168253832576 \
---outFileNamePrefix  
+--outFileNamePrefix ../Logs/star_ 
 
 ## --genomeChrBinNbits 14 because 
 # log2(GenomeLength/NumberOfReferences) = 13.64 
