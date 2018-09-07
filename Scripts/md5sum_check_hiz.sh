@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # Cut the md5sum column from METADATA_final.csv, sort and save as an intermediate file
 cut -d , -f3 METADATA_final.csv | grep -v md5sum| sort > Outputs/METADATA_md5sum.csv
 
