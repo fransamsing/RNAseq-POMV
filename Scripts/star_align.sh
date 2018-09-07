@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #***************************************************************#
-#                ALIGN SEQ READ AGAINST REF GENOME              #
-#                    STEP 2 IN STAR PIPELINE                    #
+#                Align Raw Reads Against Salmon Genome          #
+#                      STEP 2 IN STAR PIPELINE                  #
 #***************************************************************#
 
 #--------------------------sbatch header------------------------#
