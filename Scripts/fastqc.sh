@@ -14,7 +14,7 @@
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=francisca.samsingpedrals@csiro.au
 #SBATCH --output=../Logs/fastqc_%A.out
-#SBATCH --array=1-30
+#SBATCH --array=0-29
 
 #----------------------project variables------------------------# 
 IN_DIR=/OSM/CBR/AF_POMV/work/POMV_RNA_seq/Data

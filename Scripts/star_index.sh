@@ -21,12 +21,12 @@ module load star
 
 # Working Dictories 
 FILE_DIR=/OSM/CBR/AF_POMV/work/POMV_RNA_seq
-OUT_DIR=/flush3/sam079/RNAseq-POMV
+OUT_DIR=/flush3/sam079/RNAseq-POMV/GenomeIndex
 
 
 STAR \
 --runMode genomeGenerate \
---genomeDir ${OUT_DIR}/GenomeIndex/ \
+--genomeDir ${OUT_DIR}/Star \
 --runThreadN 8 \
 --genomeChrBinNbits 14 \
 --genomeFastaFiles  ${FILE_DIR}/Genomes/Salmo_salar/GCF_000233375.1_ICSASG_v2_genomic.fna \

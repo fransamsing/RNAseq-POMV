@@ -1,0 +1,2 @@
+Error: the read mismatches (10) and the read gap length (2) should be less than or equal to the read edit dist (2)
+Either decrease --read-mismatches or --read-gap-length, or increase --read-edit-dist

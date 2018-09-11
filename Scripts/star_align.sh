@@ -15,8 +15,8 @@
 #SBATCH --mem=40GB
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=francisca.samsingpedrals@csiro.au
-#SBATCH --output=../Logs/star_%A.out
-#SBATCH --array=1-15
+#SBATCH --output=../Logs/star_with_tophat_settings_%A.out
+#SBATCH --array=0-14
 
 
 module load jemalloc
@@ -26,7 +26,7 @@ module load star
 # Working Dictories 
 INPDIR=/OSM/CBR/AF_POMV/work/POMV_RNA_seq/Data
 ANODIR=/OSM/CBR/AF_POMV/work/POMV_RNA_seq/Genomes/Salmo_salar
-REFDIR=/flush3/sam079/RNAseq-POMV/GenomeIndex
+REFDIR=/flush3/sam079/RNAseq-POMV/GenomeIndex/Star
 OUTDIR=/flush3/sam079/RNAseq-POMV/Processed/Alignment
 
 SAMPLES=( $(cut -d , -f 1 ../STARInputList.csv) );
@@ -42,12 +42,12 @@ then
     --genomeDir ${REFDIR}/ \
     --readFilesIn ${INPDIR}/${INFILES_R1[$i]} ${INPDIR}/${INFILES_R2[$i]} \
     --readFilesCommand zcat \
-    --outFileNamePrefix ${OUTDIR}/${SAMPLES[$i]} \
-    --outFilterMismatchNmax 10 \
+    --outFileNamePrefix ${OUTDIR}/${SAMPLES[$i]}_THdefaults \
+    --outFilterMismatchNmax 2 \
     --outSAMtype BAM SortedByCoordinate \
     --quantMode TranscriptomeSAM GeneCounts \
     --outReadsUnmapped Fastx \
-    --outFilterMultimapNmax 10 \
+    --outFilterMultimapNmax 20 \
     --outSAMattrIHstart 0 \
     --outSAMmapqUnique 255 \
     --outSAMmultNmax -1 \
@@ -55,3 +55,8 @@ then
 else
     echo "Error: Missing array index as SLURM_ARRAY_TASK_ID"
 fi
+
+## PARAMETER TWEAKING:
+## --outFilterMismatchNmax 999 (or no filter) is the default for STAR. Set to 10 for better results following Ian's sugges## tion or set to 2 to simulate TOPHAT'S defaults setting 
+## --outFilterMultimapNmax 20 is the default for STAR and TOPHAT. Set to 10 for better results following Ian's suggestion
+
