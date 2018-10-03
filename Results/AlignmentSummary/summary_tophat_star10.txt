@@ -1,0 +1,15 @@
+NEGcontrolR1_star_equivalent/align_summary.txt:95.9% overall read mapping rate.
+NEGcontrolR2_star_equivalent/align_summary.txt:95.4% overall read mapping rate.
+NEGcontrolR3_star_equivalent/align_summary.txt:95.4% overall read mapping rate.
+POMV6HPIR1_star_equivalent/align_summary.txt:92.9% overall read mapping rate.
+POMV6HPIR2_star_equivalent/align_summary.txt:93.2% overall read mapping rate.
+POMV6HPIR3_star_equivalent/align_summary.txt:93.0% overall read mapping rate.
+ISAV6HPIR1_star_equivalent/align_summary.txt:94.9% overall read mapping rate.
+ISAV6HPIR2_star_equivalent/align_summary.txt:95.3% overall read mapping rate.
+ISAV6HPIR3_star_equivalent/align_summary.txt:96.3% overall read mapping rate.
+POMV24HPIR1_star_equivalent/align_summary.txt:37.0% overall read mapping rate.
+POMV24HPIR2_star_equivalent/align_summary.txt:35.2% overall read mapping rate.
+POMV24HPIR3_star_equivalent/align_summary.txt:36.1% overall read mapping rate.
+ISAV24HPIR1_star_equivalent/align_summary.txt:72.9% overall read mapping rate.
+ISAV24HPIR2_star_equivalent/align_summary.txt:76.0% overall read mapping rate.
+ISAV24HPIR3_star_equivalent/align_summary.txt:75.5% overall read mapping rate.

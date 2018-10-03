@@ -1,0 +1,3 @@
+ModuleCmd_Load.c(204):ERROR:105: Unable to locate a modulefile for 'cufflink/2.2.2s'
+You are using Cufflinks v2.2.2, which is the most recent release.
+Error: cannot create directory /flush3/sam079/RNAseq-POMV/Processed/Assembly/SalmonPOMV/ISAV24HPIR3

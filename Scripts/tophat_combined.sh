@@ -25,6 +25,7 @@ module load bowtie/2.2.9
 
 # Working Directories
 INPDIR=/OSM/CBR/AF_POMV/work/POMV_RNA_seq/Data
+ANODIR=/OSM/CBR/AF_POMV/work/POMV_RNA_seq
 REFDIR=/flush3/sam079/RNAseq-POMV/GenomeIndex/Bowtie_SalmonPOMV
 #REFDIR=/flush3/sam079/RNAseq-POMV/GenomeIndex/Bowtie_SalmonISAV
 OUTDIR=/flush3/sam079/RNAseq-POMV/Processed/Alignment/AlignSalmonPOMVCombined

@@ -1,0 +1,15 @@
+NEGcontrolR1/align_summary.txt:84.7% overall read mapping rate.
+NEGcontrolR2/align_summary.txt:85.0% overall read mapping rate.
+NEGcontrolR3/align_summary.txt:84.8% overall read mapping rate.
+POMV6HPIR1/align_summary.txt:82.3% overall read mapping rate.
+POMV6HPIR2/align_summary.txt:81.3% overall read mapping rate.
+POMV6HPIR3/align_summary.txt:82.4% overall read mapping rate.
+ISAV6HPIR1/align_summary.txt:84.1% overall read mapping rate.
+ISAV6HPIR2/align_summary.txt:84.9% overall read mapping rate.
+ISAV6HPIR3/align_summary.txt:85.8% overall read mapping rate.
+POMV24HPIR1/align_summary.txt:30.7% overall read mapping rate.
+POMV24HPIR2/align_summary.txt:30.1% overall read mapping rate.
+POMV24HPIR3/align_summary.txt:30.1% overall read mapping rate.
+ISAV24HPIR1/align_summary.txt:87.7% overall read mapping rate.
+ISAV24HPIR2/align_summary.txt:87.1% overall read mapping rate.
+ISAV24HPIR3/align_summary.txt:87.8% overall read mapping rate.

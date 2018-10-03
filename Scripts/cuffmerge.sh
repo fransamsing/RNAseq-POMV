@@ -34,16 +34,12 @@ OUTDIR=/flush3/sam079/RNAseq-POMV/Processed/Assembly/SalmonPOMV/Cufflinks
 
 #cuffmerge -s $REFDIR/SalmonPOMV.fa -p 8 -o $OUTDIR/cuffmerge $OUTDIR/assemblies.txt
 
-ls `find $INPDIR/NEG* -type f` | grep -w accepted_hits.bam > $INPDIR/accepted_hitsNEG.txt
-ls `find $INPDIR/*6* -type f` | grep -w accepted_hits.bam | sort -r > $INPDIR/accepted_hits6HPI.txt
-ls `find $INPDIR/*24* -type f` | grep -w accepted_hits.bam | sort -r > $INPDIR/accepted_hits24HPI.txt
-
-AHITS=$(cat $INPDIR/accepted_hitsNEG.txt $INPDIR/accepted_hits6HPI.txt $INPDIR/accepted_hits24HPI.txt)
-
-
-
-
-
-cuffdiff -o $OUTDIR/cuffdiff -b $REFDIR/SalmonPOMV.fa -p 8 -L NEG, POMV6HPI, ISAV6HPI, POMV24HPI, ISAV24HPI \
--u $OUTDIR/cuffmerge/merged.gtf  
+cuffdiff -o $OUTDIR/cuffdiff -b $REFDIR/SalmonPOMV.fa -p 8 -L NEG,POMV6HPI,ISAV6HPI,POMV24HPI,ISAV24HPI \
+-u $OUTDIR/cuffmerge/merged.gtf \
+$INPDIR/NEGcontrolR1/accepted_hits.bam,$INPDIR/NEGcontrolR2/accepted_hits.bam,$INPDIR/NEGcontrolR3/accepted_hits.bam \
+$INPDIR/POMV6HPIR1/accepted_hits.bam,$INPDIR/POMV6HPIR2/accepted_hits.bam,$INPDIR/POMV6HPIR3/accepted_hits.bam \
+$INPDIR/ISAV6HPIR1/accepted_hits.bam,$INPDIR/ISAV6HPIR2/accepted_hits.bam,$INPDIR/ISAV6HPIR3/accepted_hits.bam \
+$INPDIR/POMV24HPIR1/accepted_hits.bam,$INPDIR/POMV24HPIR2/accepted_hits.bam,$INPDIR/POMV24HPIR3/accepted_hits.bam \
+$INPDIR/ISAV24HPIR1/accepted_hits.bam,$INPDIR/ISAV24HPIR2/accepted_hits.bam,$INPDIR/ISAV24HPIR3/accepted_hits.bam
+ 
 

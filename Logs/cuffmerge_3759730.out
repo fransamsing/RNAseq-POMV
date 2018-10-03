@@ -1,0 +1,4 @@
+You are using Cufflinks v2.2.2, which is the most recent release.
+open: No such file or directory
+Error: cannot open file   for reading. Unrecognized file type
+/cm/local/apps/slurm/var/spool/job3759730/slurm_script: line 43: /flush3/sam079/RNAseq-POMV/Processed/Alignment/AlignSalmonPOMVCombined/ISAV24HPIR1/accepted_hits.bam,/flush3/sam079/RNAseq-POMV/Processed/Alignment/AlignSalmonPOMVCombined/ISAV24HPIR2/accepted_hits.bam,/flush3/sam079/RNAseq-POMV/Processed/Alignment/AlignSalmonPOMVCombined/ISAV24HPIR3/accepted_hits.bam: No such file or directory
