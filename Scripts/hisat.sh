@@ -2,7 +2,7 @@
 
 #***************************************************************#
 #              HISAT Alignment with Salmon Genome               #
-#               STEP 1 IN HISAT-Stringtie pipeline              #
+#               STEP 2 IN HISAT-Stringtie pipeline              #
 #***************************************************************#
 
 #--------------------------sbatch header------------------------#
@@ -36,7 +36,7 @@ then
     i=$SLURM_ARRAY_TASK_ID
     INFILES_R1=${INPDIR}/${INFILES_R1_LIST[$i]}
     INFILES_R2=${INPDIR}/${INFILES_R2_LIST[$i]}
-    hisat2 -p 8 --dta -x ${REFDIR}/SalmonPOMV -S ${OUTDIR}/${SAMPLES[$i]} -1 ${INFILES_R1} -2 ${INFILES_R2}
+    hisat2 -p 8 --dta -x ${REFDIR}/SalmonPOMV -S ${OUTDIR}/${SAMPLES[$i]}.sam -1 ${INFILES_R1} -2 ${INFILES_R2}
 else
     echo "Error: Missing array index as SLURM_ARRAY_TASK_ID"
 fi

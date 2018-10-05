@@ -1,0 +1,5 @@
+
+EXITING because of FATAL ERROR: could not create output file: /flush3/sam079/RNAseq-POMV/Processed/Alignment/Star_ReadCounts/NEGcontrolR2_THdefaultsLog.out
+Check if the path /flush3/sam079/RNAseq-POMV/Processed/Alignment/Star_ReadCounts/NEGcontrolR2_THdefaults exists and you have permissions to write there
+
+Oct 04 18:42:50 ...... FATAL ERROR, exiting

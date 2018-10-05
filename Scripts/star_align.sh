@@ -8,7 +8,7 @@
 #--------------------------sbatch header------------------------#
 
 #SBATCH --job-name=STAR_align
-#SBATCH --time=12:00:00
+#SBATCH --time=02:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=8
@@ -27,7 +27,7 @@ module load star
 INPDIR=/OSM/CBR/AF_POMV/work/POMV_RNA_seq/Data
 ANODIR=/OSM/CBR/AF_POMV/work/POMV_RNA_seq/Genomes/Salmo_salar
 REFDIR=/flush3/sam079/RNAseq-POMV/GenomeIndex/Star
-OUTDIR=/flush3/sam079/RNAseq-POMV/Processed/Alignment
+OUTDIR=/flush3/sam079/RNAseq-POMV/Processed/Alignment/AlignSalmonGenomeStar/STAR
 
 SAMPLES=( $(cut -d , -f 1 ../STARInputList.csv) );
 INFILES_R1=( $(cut -d , -f 2 ../STARInputList.csv) );
@@ -38,11 +38,11 @@ if [ ! -z "$SLURM_ARRAY_TASK_ID" ]
 then
     i=$SLURM_ARRAY_TASK_ID
     STAR \
-    --runThreadN 8 \
     --genomeDir ${REFDIR}/ \
+    --runThreadN 8 \
     --readFilesIn ${INPDIR}/${INFILES_R1[$i]} ${INPDIR}/${INFILES_R2[$i]} \
     --readFilesCommand zcat \
-    --outFileNamePrefix ${OUTDIR}/${SAMPLES[$i]}_THdefaults \
+    --outFileNamePrefix ${OUTDIR}/${SAMPLES[$i]} \
     --outFilterMismatchNmax 2 \
     --outSAMtype BAM SortedByCoordinate \
     --quantMode TranscriptomeSAM GeneCounts \
