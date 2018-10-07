@@ -42,9 +42,9 @@ else
 fi
 
 ## create filepath lists
-ls $OUTDIR > /flush3/sam079/RNAseq-POMV/Processed/Expression/SalmonPOMV/sample_ids.txt
-ls -d -1 $OUTDIR/** > /flush3/sam079/RNAseq-POMV/Processed/Expression/SalmonPOMV/filepathlist.txt
-paste -d$'\t'  /flush3/sam079/RNAseq-POMV/Processed/Expression/SalmonPOMV/sample_ids.txt /flush3/sam079/RNAseq-POMV/Processed/Expression/SalmonPOMV/filepathlist.txt >> /flush3/sam079/RNAseq-POMV/Processed/Expression/SalmonPOMV/sampleIDs_filepaths.txt
+#ls $OUTDIR > /flush3/sam079/RNAseq-POMV/Processed/Expression/SalmonPOMV/sample_ids.txt
+#ls -d -1 $OUTDIR/** > /flush3/sam079/RNAseq-POMV/Processed/Expression/SalmonPOMV/filepathlist.txt
+#paste -d$'\t'  /flush3/sam079/RNAseq-POMV/Processed/Expression/SalmonPOMV/sample_ids.txt /flush3/sam079/RNAseq-POMV/Processed/Expression/SalmonPOMV/filepathlist.txt >> /flush3/sam079/RNAseq-POMV/Processed/Expression/SalmonPOMV/sampleIDs_filepaths.txt
 
 # Create list for the python program 
 #ls `find $OUTDIR/NEG* -type f` | grep transcript > $OUTDIR/NEG.txt
