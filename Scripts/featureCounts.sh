@@ -30,8 +30,5 @@ featureCounts -T 8 -p -t exon \
 -o ${OUTDIR}/read_counts.txt \
 ${INPDIR}/*Aligned.sortedByCoord.out.bam \ 
 
-
-
-
-
-
+# after creating the file, I cleaned and saved as by running: 
+# cut -f 1,7-15 read_counts.txt >  read_counts_clean.txt
