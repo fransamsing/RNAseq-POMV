@@ -39,3 +39,6 @@ then
 else
     echo "Error: Missing array index as SLURM_ARRAY_TASK_ID"
 fi
+
+
+## The OUTDIR command doens't work with cufflinks in an array job, its a bug in the software

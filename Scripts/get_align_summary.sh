@@ -9,9 +9,6 @@ for f in $FILENAMES
          do grep -r "overall read mapping rate"  ${INPDIR}/AlignSalmonGenomeBowtie/TophatDefaults/${f} | cut -d / -f 9,10
 done > ../Results/summary_tophat_defaults.txt
 
-for f in $FILENAMES
-         do grep -r "overall read mapping rate"  ${INPDIR}/AlignSalmonGenomeBowtie/TophatStar10/${f}_star_equivalent | cut -d / -f 9,10
-done > ../Results/summary_tophat_star10.txt    
 
 for f in $FILENAMES
          do grep -r "overall read mapping rate"  ${INPDIR}/AlignSalmonPOMVCombined/${f} | cut -d / -f 8,9
@@ -22,11 +19,11 @@ for f in $FILENAMES
 done > ../Results/summary_tophat_salmon_ISAV.txt     
 
 for f in $FILENAMES
-         do grep -H "Uniquely mapped reads % |" ${INPDIR}/AlignSalmonGenomeStar/Star10/${f}Log.final.out | cut -d / -f 9
- done > ../Results/summary_star10.txt
+         do grep -Hi "Uniquely mapped reads % |" ${INPDIR}/AlignSalmonGenomeStar/STAR/${f}Log.final.out | cut -d / -f 9
+ done > ../Results/summary_star.txt
 
-for f in $FILENAMES
-         do grep -H "Uniquely mapped reads % |" ${INPDIR}/AlignSalmonGenomeStar/StarTophatDefaults/${f}_THdefaultsLog.final.out | cut -d / -f 9
- done > ../Results/summary_star_tophat_defaults.txt
+
+
+
 
 

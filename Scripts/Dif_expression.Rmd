@@ -1,0 +1,501 @@
+---
+title: "Differential expression"
+author: "Francisca Samsing"
+date: "11/10/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning = FALSE, fig.align="center")
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+library(knitr)
+```
+
+## Experiment overview
+
+Atlantic salmon kidney (ASK) cells were infected in triplicate wells with POMV (isolate 14-01514) and ISAV (isolate Glesvaer-2-90), both part of the collections of specimens kept at the Australian Animal Health Laboratory (AAHL) in Geelong. Infected cells were sampled 6 and 24 hours post infection (hpi). Negative control cells were harvested at time 0, before infection. From infected and non-infected ASK cells, we extracted RNA for transcriptome sequencing (RNA-sequencing) to examine both viral and host gene expression profiles. This experiment has a total of 15 replicated samples. 
+
+## Analysis pipeline
+
+```{r, echo = FALSE, }
+path <- '/Volumes/HOME_INTEL/RNAseq-POMV/Docs/Analysis_pipeline.png'
+include_graphics(path)
+```
+
+## Differential Expression with Limma-Voom
+A great tutorial https://combine-australia.github.io/RNAseq-R/06-rnaseq-day1.html
+
+```{r}
+# Loading the required packaged
+library(edgeR)
+library(limma)
+library(Glimma)
+library(RColorBrewer)
+library(ggplot2)
+library(gplots)
+library(genefilter)
+library(pheatmap)
+```
+
+
+### Load raw counts
+
+```{r, include=FALSE}
+# Import raw Counts, re-name and reorder columns 
+countdata <- read.csv('Data/read_counts_clean.txt', header = TRUE, sep = '\t',  row.names = 'Geneid')
+
+colnames(countdata) <- c('ISAV24.R1', 'ISAV24.R2', 'ISAV24.R3', 'ISAV6.R1', 'ISAV6.R2', 'ISAV6.R3', 
+                      'Control.R1', 'Control.R2', 'Control.R3',
+                      'POMV24.R1', 'POMV24.R2', 'POMV24.R3', 'POMV6.R1', 'POMV6.R2', 'POMV6.R3')
+
+countdata2 <- countdata[,c(7,8,9,13,14,15,4,5,6,10,11,12,1,2,3)]
+
+DataGroups <- c('Control', 'Control', 'Control', 'POMV6', 'POMV6', 'POMV6', 
+            'ISAV6', 'ISAV6', 'ISAV6', 'POMV24', 'POMV24', 'POMV24', 
+            'ISAV24', 'ISAV24', 'ISAV24')
+
+head(countdata2)
+```
+
+```{r}
+# Create DGE (Differential gene expression) object using EdgeR
+dgList <- DGEList(counts=countdata2,group=factor(DataGroups))
+y <- dgList # Rename the object to y to keep a clean version of the object (dgList)
+head(y$counts)
+```
+
+The following shows a table of our groups and library sizes, BEFORE normalizing our data for library size. 
+
+```{r}
+y$samples
+```
+
+```{r}
+# Visualizing Library Sizes 
+library.size <- as.data.frame(y$samples$lib.size)
+library.size$samples <- colnames(y)
+colnames(library.size) <- c('library_sizes', 'samples')
+
+ggplot(library.size, aes(samples, library_sizes)) + geom_col() +
+  labs(x = "Samples", 
+       y= "Library size",
+       title = "Barplot of library sizes") + 
+  theme(axis.text.x = element_text(face="bold", size=10, angle=90))
+
+```
+
+### Filtering
+
+Genes with very low counts across all libraries provide little evidence for differential expression. In
+the biological point of view, a gene must be expressed at some minimal level before it is likely to be translated into a protein or to be biologically important. 
+
+In addition, the pronounced discreteness of these counts interferes with some of the statistical approximations that are used later in the pipeline. These genes should be filtered out prior to further analysis.
+
+As a general rule, a good threshold can be chosen by identifying the counts per million (CPM) that corresponds to a raw count of 10, which in this case is about 0.5. Here we filter to retain genes that are represented at least 0.5 counts per million (cpm) in at least 3 samples. 
+
+```{r}
+# Get the counts per million
+countsPerMillion <- cpm(y)
+countCheck <- countsPerMillion > 0.5
+#head(countCheck) ## produces a matrix of Trues and False
+```
+
+```{r}
+# Let's have a look and see whether our threshold of 0.5 does indeed correspond to a count of about 10-15
+# We will look at the first sample
+plot(countsPerMillion[,1],countdata2[,1], ylim=c(0,50),xlim=c(0,3))
+# Add a vertical line at 0.5 CPM
+abline(v=0.5, col = 'blue')
+abline(h=10, col = 'blue')
+```
+
+```{r}
+#Apply filter
+keep <- which(rowSums(countCheck) >= 3) # cpm present in at least 3 samples 
+y <- y[keep,]
+y$samples$lib.size <- colSums(y$counts)
+```
+
+### Normalization 
+edgeR (and limma-voom) are concerned with differential expression analysis rather than with the quantification of
+expression levels. It is concerned with relative changes in expression levels between conditions,
+but not directly with estimating absolute expression levels. This greatly simpliflies the technical
+infuences that need to be taken into account, because any technical factor that is unrelated to
+the experimental conditions should cancel out of any differential expression analysis. For example,
+read counts can generally be expected to be proportional to length as well as to expression for any
+transcript, but edgeR does not generally need to adjust for gene length because gene length has the
+same relative influence on the read counts for each RNA sample.
+
+First we can look at a boxplot of logcounts before normalizing the data.
+
+```{r}
+# Get log2 counts per million
+logcounts <- cpm(y,log=TRUE)
+# Check distributions of samples using boxplots
+boxplot(logcounts, xlab="", ylab="Log2 counts per million",las=2)
+# Let's add a blue horizontal line that corresponds to the median logCPM
+abline(h=median(logcounts),col="blue")
+title("Boxplots of logCPMs (unnormalised)")
+```
+
+We will normalize our data using the TMM (trimmed mean of M) method. 
+
+```{r}
+# Normalization using TMM method
+# TMM normalization is performed to eliminate composition biases between libraries.
+y <- calcNormFactors(y, method="TMM")
+y$samples
+```
+
+The performance of the TMM normalization procedure can be examined using mean-difference
+(MD) plots. Ideally, the bulk of genes should be centred at a log-fold change of zero. This indicates that
+any composition bias between libraries has been successfully removed. This quality check should be repeated by constructing a MD plot for each sample.
+
+```{r}
+par(mfrow=c(1,3))
+plotMD(cpm(y, log=TRUE), column=10) # the column in indicates what sample I want to make my plot for
+abline(h=0, col="red", lty=2, lwd=2)
+plotMD(cpm(y, log=TRUE), column=11) 
+abline(h=0, col="red", lty=2, lwd=2)
+plotMD(cpm(y, log=TRUE), column=10) 
+abline(h=0, col="red", lty=2, lwd=2)
+
+```
+
+MD plots look OK for our POMV24 treatment. Now we can do some post-normalization data exploration before the differential expression analysis. 
+
+### Data Exploration
+The data can be explored by generating multi-dimensional scaling (MDS) plots, which show the differences between the expression profiles of different samples in two dimensions. Data can also be explore using heatmaps of the variance of logcounts accross samples. 
+
+> Hierarchical clustering with heatmaps for the top 100 genes with the highest variance
+
+```{r, echo=FALSE}
+logcounts <- cpm(y, log=TRUE, prior.count = 1) # prior.count = average count to be added to each observation to avoid taking log of zero. Used only if log=TRUE.
+# Estimate the variance for each row in the logcounts matrix
+var_genes <- apply(logcounts, 1, var)
+# Get the gene names for the top 100 most variable genes
+select_var <- names(sort(var_genes, decreasing=TRUE))[1:100]
+# Subset logcounts matrix for those with the highest variance
+highly_variable_lcpm <- logcounts[select_var,]
+
+## Get some nicer colours for plotting
+mypalette <- brewer.pal(11,"PiYG")
+morecols <- colorRampPalette(mypalette)
+
+# Plot the heatmap
+par(oma=c(1,0,0,0))
+heatmap.2(highly_variable_lcpm,col=rev(morecols(50)),trace="none",scale="row")
+```
+
+
+> Hierarchical clustering with heatmaps for the top 500 genes with the highest variance
+
+```{r, echo=FALSE}
+# Get the gene names for the top 500 most variable genes
+select_var <- names(sort(var_genes, decreasing=TRUE))[1:500]
+# Subset logcounts matrix
+highly_variable_lcpm <- logcounts[select_var,]
+## Get some nicer colours
+mypalette <- brewer.pal(11,"PiYG")
+morecols <- colorRampPalette(mypalette)
+# Plot the heatmap
+par(oma=c(1,0,0,0))
+heatmap.2(highly_variable_lcpm,col=rev(morecols(50)),trace="none",scale="row")
+```
+
+"Row Z scores" are a scaling parameter where values have been normalized to SD units by: 
+z = (x - mean)/sd
+
+> Hierarchical clustering with heatmaps for the top 2000 genes with the highest variance
+
+```{r, echo=FALSE}
+# Get the gene names for the top 2000 most variable genes
+select_var <- names(sort(var_genes, decreasing=TRUE))[1:2000]
+# Subset logcounts matrix
+highly_variable_lcpm <- logcounts[select_var,]
+## Get some nicer colours
+mypalette <- brewer.pal(11,"PiYG")
+morecols <- colorRampPalette(mypalette)
+# Plot the heatmap
+par(oma=c(1,0,0,0))
+heatmap.2(highly_variable_lcpm,col=rev(morecols(50)),trace="none",scale="row")
+```
+
+The entire assumption of EdgeR and other programs that detect differential expression is that *most* genes don't change. If everything is changing all over the place then the scaling strategies they use can be way off - you can actually end up with a situation where something that is upregulated is actually downregulated, etc. So, it's worth having a visual check of a heatmap with all the genes, and just make sure this assumption is ok. 
+
+Multidimenstional scaling plots can also be used to visualize the clustering of our replicates and treatment conditions. 
+
+```{r}
+color <- as.numeric(y$samples$group)
+points <- as.numeric(y$samples$group)
+plotMDS(y, method="bcv", col = as.numeric(y$samples$group))
+```
+
+### The design matrix
+
+Build the design matrix using the model.matrix() function from edgeR.
+
+```{r}
+groups <- y$samples$group # get the groups from the y object
+design <- model.matrix(~ 0 + groups)
+colnames(design) <- levels(y$samples$group)
+rownames(design) <- colnames(y)
+design
+```
+
+*The Voom transformation*
+
+Transforms count data to log2-counts per million (logCPM) using the **voom** function in the limma package, estimates the mean-variance relationship and uses this to compute appropriate observation-level weights. The data are then ready for linear modelling.
+
+```{r}
+# Voom transform the data
+par(mfrow=c(1,1))
+v <- voom(y,design,plot = TRUE)
+
+```
+
+```{r}
+# The expression values in v$E are already log2 values so we don’t need to log-transform.
+par(mfrow=c(1,2))
+boxplot(logcounts, xlab="", ylab="Log2 counts per million",las=2,main="Unnormalised logCPM")
+abline(h=median(logcounts),col="blue") ## Let's add a blue horizontal line that corresponds to the median logCPM
+
+boxplot(v$E, xlab="", ylab="Log2 counts per million",las=2,main="Voom transformed logCPM")
+abline(h=median(v$E),col="blue")
+```
+
+Testing for differential expression: fit the linear model and build the contrast matrix.
+
+```{r}
+# Fit the linear model
+fit <- lmFit(v)
+names(fit)
+
+# Contrast Matrix
+cont.matrix  <- makeContrasts(ControlvsPOMV6 = POMV6 - Control,
+                     ControlvsPOMV24 = POMV24 - Control,
+                     ControlvsISAV6 = ISAV6 - Control,
+                     ControlvsISAV24 = ISAV24 - Control, levels=design)
+
+fit.cont <- contrasts.fit(fit, cont.matrix)
+fit.cont <- eBayes(fit.cont) #This function is used to rank genes in order of evidence for differential expression.
+dim(fit.cont)
+
+```
+
+```{r}
+# We can use the limma decideTests function to generate
+# a quick summary of DE genes for the contrasts.
+summa.fit <- decideTests(fit.cont)
+summary(summa.fit)
+```
+
+```{r}
+expres <- summary(summa.fit)
+expres <- t(expres)
+expres <- as.data.frame(expres)
+
+myColors <- c("#A1D76A", "#FFFF99", "#E9A3C9")
+ggplot(expres, aes(x = Var1, y = Freq)) + geom_col(aes(fill = Var2)) +  
+  labs(x = "Comparison between samples", 
+  y= "Number of genes",
+  fill = "Change in gene expression",
+  title = "Up or down regulation of my genes") +
+  scale_fill_manual(values=myColors) +
+  theme(axis.text.x = element_text(face="bold", size=8, angle=90))
+```
+
+The following function takes as an arguments a contrast matrix (fit.cont object created in EdgeE), a string indicating the comparison, and a string indicating which table of genes we want (UP, DOWN or ALL).
+
+```{r}
+# The toptable
+sig.genes <- function(fit.contrast, mycoef, upregulated = c('UP', 'DOWN', 'ALL')) {
+  x <- topTable(fit = fit.contrast, coef = mycoef, sort.by="p",n="Inf")
+  x_sig <- x[x$adj.P.Val < 0.05,] 
+  if (upregulated == 'UP') {
+    x_UP <- x_sig[x_sig$logFC >= 1.5,]
+    #x_UP <- rownames_to_column(x_UP, var = "GeneID")
+  } else if (upregulated == 'DOWN') {
+    x_DOWN <- x_sig[x_sig$logFC <= -1.5,]
+    #x_DOWN <- rownames_to_column(x_DOWN, var = "GeneID")
+  }
+  else {
+   x_sig 
+  }
+  }
+```
+
+We use the function sig.genes() constructed before to get our comparisons, and save them as csv tables. 
+
+```{r, include=FALSE}
+
+# POMV
+ControlvsPOMV6_UP <- sig.genes(fit.cont, mycoef = "ControlvsPOMV6", 'UP')
+ControlvsPOMV6_DOWN <- sig.genes(fit.cont, mycoef = "ControlvsPOMV6", 'DOWN')
+ControlvsPOMV6_ALL <- sig.genes(fit.cont, mycoef = "ControlvsPOMV6", upregulated = FALSE)
+
+ControlvsPOMV24_UP <- sig.genes(fit.cont, mycoef = "ControlvsPOMV24", 'UP')
+head(ControlvsPOMV24_UP[order(-ControlvsPOMV24_UP$logFC),])
+ControlvsPOMV24_DOWN <- sig.genes(fit.cont, mycoef = "ControlvsPOMV24", 'DOWN')
+ControlvsPOMV24_ALL <- sig.genes(fit.cont, mycoef = "ControlvsPOMV24", upregulated = FALSE)
+
+## ISAV
+ControlvsISAV6_UP <- sig.genes(fit.cont, mycoef = "ControlvsISAV6", 'UP')
+ControlvsISAV6_DOWN <- sig.genes(fit.cont, mycoef = "ControlvsISAV6", 'DOWN')
+ControlvsISAV6_ALL <- sig.genes(fit.cont, mycoef = "ControlvsISAV6", upregulated = FALSE)
+
+ControlvsISAV24_UP <- sig.genes(fit.cont, mycoef = "ControlvsISAV24", 'UP')
+ControlvsISAV24_DOWN <- sig.genes(fit.cont, mycoef = "ControlvsISAV24", 'DOWN')
+ControlvsISAV24_ALL <- sig.genes(fit.cont, mycoef = "ControlvsISAV24", upregulated = FALSE)
+
+```
+
+## Plot after differential expression
+A good tutorial for this
+https://hbctraining.github.io/Training-modules/Visualization_in_R/lessons/03_advanced_visualizations.html
+
+```{r}
+# THE VOLCANO PLOT FOR Control vs POMV6
+res_table1 <- topTable(fit = fit.cont, coef = 'ControlvsPOMV6', sort.by="p",n="Inf")
+res_table2 <- topTable(fit = fit.cont, coef = 'ControlvsPOMV24', sort.by="p",n="Inf")
+## Obtain logical vector regarding whether padj values are less than 0.05
+threshold1 <- res_table1$adj.P.Val < 0.05 
+threshold2 <- res_table2$adj.P.Val < 0.05 
+## Determine the number of TRUE values
+length(which(threshold1))
+length(which(threshold2))
+## Add logical vector as a column (threshold) to the res_tableOE
+res_table1$threshold <- threshold1
+res_table2$threshold <- threshold2
+
+## Volcano plot
+ggplot(res_table1) +
+  geom_point(aes(x=logFC, y=-log10(adj.P.Val), colour=threshold)) +
+  ggtitle("Control vs POMV6") +
+  xlab("log2 fold change") + 
+  ylab("-log10 adjusted p-value") +
+  scale_y_continuous(limits = c(0,25)) +
+  theme(legend.position = "none",
+        plot.title = element_text(size = rel(1.5), hjust = 0.5),
+        axis.title = element_text(size = rel(1.25)))
+
+ggplot(res_table2) +
+  geom_point(aes(x=logFC, y=-log10(adj.P.Val), colour=threshold)) +
+  ggtitle("Control vs POMV24") +
+  xlab("log2 fold change") + 
+  ylab("-log10 adjusted p-value") +
+  scale_y_continuous(limits = c(0,25)) +
+  theme(legend.position = "none",
+        plot.title = element_text(size = rel(1.5), hjust = 0.5),
+        axis.title = element_text(size = rel(1.25)))
+
+```
+
+```{r}
+## MA Plots
+
+myColors <- c("#A1D76A", "#E9A3C9")
+plotMA(fit.cont,coef=1,status=summa.fit[,"ControlvsPOMV6"], hl.col=myColors, cex = 0.3, legend = FALSE, main = 'Control vs POMV6', alpha = 0.5)
+
+```
+
+```{r}
+## MA Plots in Glimma
+#glMDPlot(fit.cont, status=summa.fit, counts=v, groups=groups, side.main="Symbols")
+```
+
+## Annotatate differentially expressed genes using the Annotation Hub and Salmo salar database
+
+More info here: https://bioconductor.org/packages/release/bioc/vignettes/AnnotationDbi/inst/doc/IntroToAnnotationPackages.pdf
+
+```{r}
+library(Category)
+library(AnnotationHub)
+hub <- AnnotationHub()
+query(hub, c("salmo salar","orgdb"))
+salmodb <- hub[["AH61820"]]
+DatPkgFactory(salmodb)
+columns(salmodb)
+
+```
+
+```{r}
+ann <-  AnnotationDbi::select(salmodb, keys=rownames(fit.cont), columns=c("ENTREZID","GENENAME"), keytype = "SYMBOL")
+head(ann, 10)
+```
+
+```{r, include = FALSE}
+# POMV
+# Control vs 6 hours
+ControlvsPOMV6_UP_ann <- merge(ControlvsPOMV6_UP, ann, by.x=0, by.y="SYMBOL")
+ControlvsPOMV6_DOWN_ann <- merge(ControlvsPOMV6_DOWN, ann, by.x=0, by.y="SYMBOL")
+ControlvsPOMV6_ALL_ann <- merge(ControlvsPOMV6_ALL, ann, by.x=0, by.y="SYMBOL")
+
+## control vs 24 hours 
+ControlvsPOMV24_UP_ann <- merge(ControlvsPOMV24_UP, ann, by.x=0, by.y="SYMBOL")
+ControlvsPOMV24_DOWN_ann <- merge(ControlvsPOMV24_DOWN, ann, by.x=0, by.y="SYMBOL")
+ControlvsPOMV24_ALL_ann <- merge(ControlvsPOMV24_ALL, ann, by.x=0, by.y="SYMBOL")
+
+# ISAV
+# Control vs 6 hours - ISAV
+ControlvsISAV6_UP_ann <- merge(ControlvsISAV6_UP, ann, by.x=0, by.y="SYMBOL")
+ControlvsISAV6_DOWN_ann <- merge(ControlvsISAV6_DOWN, ann, by.x=0, by.y="SYMBOL")
+ControlvsISAV6_ALL_ann <- merge(ControlvsISAV6_ALL, ann, by.x=0, by.y="SYMBOL")
+
+# Control vs 24 hours - ISAV
+ControlvsISAV24_UP_ann <- merge(ControlvsISAV24_UP, ann, by.x=0, by.y="SYMBOL")
+ControlvsISAV24_DOWN_ann <- merge(ControlvsISAV24_DOWN, ann, by.x=0, by.y="SYMBOL")
+ControlvsISAV24_ALL_ann <- merge(ControlvsISAV24_ALL, ann, by.x=0, by.y="SYMBOL")
+
+```
+
+
+```{r, include=FALSE}
+# Write tables to results
+#write.table(ControlvsPOMV6_UP_ann, 'Results/ControlvsPOMV6_UP.csv', row.names = FALSE, sep = ",")
+#write.table(ControlvsPOMV6_DOWN_ann, 'Results/ControlvsPOMV6_DOWN.csv', row.names = FALSE, sep = ",")
+write.table(ControlvsPOMV6_ALL_ann, 'Results/ControlvsPOMV6_ALL.csv', row.names = FALSE, sep = ",")
+
+#write.table(ControlvsPOMV24_UP_ann, 'Results/ControlvsPOMV24_UP.csv', row.names = FALSE, sep = ",")
+#write.table(ControlvsPOMV24_DOWN_ann, 'Results/ControlvsPOMV24_DOWN.csv', row.names = FALSE, sep = ",")
+write.table(ControlvsPOMV24_ALL_ann, 'Results/ControlvsPOMV24_ALL.csv', row.names = FALSE, sep = ",")
+
+#write.table(ControlvsISAV6_UP_ann, 'Results/RNA_seq/ControlvsISAV6_UP.csv', row.names = FALSE, sep = ",")
+#write.table(ControlvsISAV6_DOWN_ann, 'Results/RNA_seq/ControlvsISAV6_DOWN.csv', row.names = FALSE, sep = ",")
+write.table(ControlvsISAV6_ALL_ann, 'Results/ControlvsISAV6_ALL.csv', row.names = FALSE, sep = ",")
+
+#write.table(ControlvsISAV24_UP_ann, 'Results/ControlvsISAV24_UP.csv', row.names = FALSE, sep = ",")
+#write.table(ControlvsISAV24_DOWN_ann, 'Results/ControlvsISAV24_DOWN.csv', row.names = FALSE, sep = ",")
+write.table(ControlvsISAV24_ALL_ann, 'Results/ControlvsISAV24_ALL.csv', row.names = FALSE, sep = ",")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
