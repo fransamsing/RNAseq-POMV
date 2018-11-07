@@ -25,7 +25,7 @@ search_kegg_organism('sasa', by='kegg_code') ## Salmo salar = sasa in the KEGG d
 The following code loads ALL differentially expressed genes with an adjusted p-value < 0.05, and then selects those with an absolute logfold change of 1.5. 
 
 ```{r}
-POMV6 <- read.csv('Results/RNA_seq/ControlvsPOMV6_ALL.csv') 
+POMV6 <- read.csv('Results/ControlvsPOMV6_ALL.csv') 
 POMV6_SigGeneList <- POMV6[abs(POMV6$logFC) >= 1.5,]
 POMV6_SigGeneList <- POMV6_SigGeneList[order(abs(POMV6_SigGeneList$logFC), decreasing = TRUE),]
 rownames(POMV6_SigGeneList) <- NULL
@@ -48,7 +48,7 @@ cnetplot(kk_POMV6, categorySize="genNUM", foldChange=POMV6_SigGeneList_logFC)
 ## PATHWAY ANALYSIS FOR POMV 24 HPI
 
 ```{r}
-POMV24 <- read.csv('Results/RNA_seq/ControlvsPOMV24_ALL.csv') # CHECK FOR NAs
+POMV24 <- read.csv('Results/ControlvsPOMV24_ALL.csv') # CHECK FOR NAs
 POMV24_SigGeneList <- POMV24[abs(POMV24$logFC) >= 2,]
 POMV24_SigGeneList <- POMV24_SigGeneList[order(abs(POMV24_SigGeneList$logFC), decreasing = TRUE),]
 rownames(POMV24_SigGeneList) <- NULL
@@ -76,7 +76,7 @@ plot(g, vertex.label.cex=0.5)
 ## PATHWAY ANALYSIS FOR ISAV 6 HPI
 
 ```{r}
-ISAV6 <- read.csv('Results/RNA_seq/ControlvsISAV6_ALL.csv') # CHECK FOR NAs
+ISAV6 <- read.csv('Results/ControlvsISAV6_ALL.csv') # CHECK FOR NAs
 ISAV6_SigGeneList <- ISAV6[abs(ISAV6$logFC) >= 1.5,]
 ISAV6_SigGeneList <- ISAV6_SigGeneList[order(abs(ISAV6_SigGeneList$logFC), decreasing = TRUE),]
 rownames(ISAV6_SigGeneList) <- NULL
@@ -96,7 +96,7 @@ cnetplot(kk_ISAV6, categorySize="genNUM", foldChange=ISAV6_SigGeneList_logFC)
 
 ```{r}
 # Loaded gene lists como from Dif_expression (ALL differentially expressed genes with an adjusted p-value < 0.05)
-ISAV24 <- read.csv('Results/RNA_seq/ControlvsISAV24_ALL.csv') # CHECK FOR NAs
+ISAV24 <- read.csv('Results/ControlvsISAV24_ALL.csv') # CHECK FOR NAs
 ISAV24_SigGeneList <- ISAV24[abs(ISAV24$logFC) >= 1.5,]
 ISAV24_SigGeneList <- ISAV24_SigGeneList[order(abs(ISAV24_SigGeneList$logFC), decreasing = TRUE),]
 rownames(ISAV24_SigGeneList) <- NULL

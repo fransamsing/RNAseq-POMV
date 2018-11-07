@@ -12,7 +12,7 @@ search_kegg_organism('sasa', by='kegg_code')
 
 ######################## PATHWAY ANALYSIS FOR POMV 6 HOURS AFTER INFECTION ############################
 # Loaded gene lists como from Dif_expression (ALL differentially expressed genes with an adjusted p-value < 0.05)
-POMV6 <- read.csv('Results/RNA_seq/ControlvsPOMV6_ALL.csv') # CHECK FOR NAs
+POMV6 <- read.csv('Results/ControlvsPOMV6_ALL.csv') # CHECK FOR NAs
 head(POMV6)
 POMV6_SigGeneList <- POMV6[abs(POMV6$logFC) >= 1.5,]
 POMV6_SigGeneList <- POMV6_SigGeneList[order(abs(POMV6_SigGeneList$logFC), decreasing = TRUE),]
@@ -37,7 +37,7 @@ browseKEGG(kk_POMV6, 'sasa04623')
 ######################## PATHWAY ANALYSIS FOR POMV 24 AFTER INFECTION ############################
 
 # Loaded gene lists como from Dif_expression (ALL differentially expressed genes with an adjusted p-value < 0.05)
-POMV24 <- read.csv('Results/RNA_seq/ControlvsPOMV24_ALL.csv') # CHECK FOR NAs
+POMV24 <- read.csv('Results/ControlvsPOMV24_ALL.csv') # CHECK FOR NAs
 head(POMV24)
 POMV24_SigGeneList <- POMV24[abs(POMV24$logFC) >= 2,]
 POMV24_SigGeneList <- POMV24_SigGeneList[order(abs(POMV24_SigGeneList$logFC), decreasing = TRUE),]
@@ -86,7 +86,7 @@ pathview(gene.data = ISAV6_SigGeneList_logFC,
 ######################## PATHWAY ANALYSIS FOR POMV 24 AFTER INFECTION ############################
 
 # Loaded gene lists como from Dif_expression (ALL differentially expressed genes with an adjusted p-value < 0.05)
-ISAV24 <- read.csv('Results/RNA_seq/ControlvsISAV24_ALL.csv') # CHECK FOR NAs
+ISAV24 <- read.csv('Results/ControlvsISAV24_ALL.csv') # CHECK FOR NAs
 head(ISAV24)
 ISAV24_SigGeneList <- ISAV24[abs(ISAV24$logFC) >= 2,]
 ISAV24_SigGeneList <- ISAV24_SigGeneList[order(abs(ISAV24_SigGeneList$logFC), decreasing = TRUE),]
@@ -107,6 +107,5 @@ pathview(gene.data = ISAV24_SigGeneList_logFC,
          species = "sasa", limit = list(gene = c(-5,5)))
 
 
-#### Network Analysis of Co-expressed genes #### 
 
 
