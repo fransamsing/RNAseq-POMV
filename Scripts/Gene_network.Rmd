@@ -1,9 +1,10 @@
 ---
-title: "Untitled"
+title: "Gene co-expression network"
 author: "Francisca Samsing"
 date: "07/11/2018"
 output: html_document
 ---
+https://bioconductor.org/packages/release/bioc/vignettes/CVE/inst/doc/WGCNA_from_TCGA_RNAseq.html
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning = FALSE, fig.align="center")
@@ -11,22 +12,91 @@ knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
 library(knitr)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+#Loading required packages
+library(WGCNA)
 ```
 
-## Including Plots
+```{r, include=FALSE}
+# Import raw Counts, re-name and reorder columns 
+countdata <- read.csv('Data/read_counts_clean.txt', header = TRUE, sep = '\t',  row.names = 'Geneid')
 
-You can also embed plots, for example:
+colnames(countdata) <- c('ISAV24.R1', 'ISAV24.R2', 'ISAV24.R3', 'ISAV6.R1', 'ISAV6.R2', 'ISAV6.R3', 
+                      'Control.R1', 'Control.R2', 'Control.R3',
+                      'POMV24.R1', 'POMV24.R2', 'POMV24.R3', 'POMV6.R1', 'POMV6.R2', 'POMV6.R3')
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+countdata2 <- countdata[,c(7,8,9,13,14,15,4,5,6,10,11,12,1,2,3)]
+
+DataGroups <- c('Control', 'Control', 'Control', 'POMV6', 'POMV6', 'POMV6', 
+            'ISAV6', 'ISAV6', 'ISAV6', 'POMV24', 'POMV24', 'POMV24', 
+            'ISAV24', 'ISAV24', 'ISAV24')
+
+head(countdata2)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r}
+# Create DGE (Differential gene expression) object using EdgeR
+dgList <- DGEList(counts=countdata2,group=factor(DataGroups))
+y <- dgList # Rename the object to y to keep a clean version of the object (dgList)
+row.names(y$counts) = gsub("LOC(\\d)", "\\1", row.names(y$counts)) ## removing the bloody LOCs 
+```
+
+```{r}
+library(limma)
+RNAseq_voom = voom(y)$E
+```
+
+
+```{r}
+#transpose matrix to correlate genes in the following
+WGCNA_matrix = t(RNAseq_voom[order(apply(RNAseq_voom,1,mad), decreasing = T)[1:5000],])
+```
+
+## Construction of co-expression network
+
+```{r}
+#similarity measure between gene profiles: biweight midcorrelation
+s <- abs(bicor(WGCNA_matrix))
+s[1:4,1:4]
+```
+
+
+```{r}
+powers = c(c(1:10), seq(from = 12, to=20, by=2))
+sft = pickSoftThreshold(WGCNA_matrix, powerVector = powers, verbose = 5)
+plot(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],
+     xlab='Soft Threshold (power)',ylab='Scale Free Topology Model Fit,signed R^2',
+     type='n', main = paste('Scale independence'));
+text(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],
+     labels=powers,cex=1,col='red'); abline(h=0.90,col='red')
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
