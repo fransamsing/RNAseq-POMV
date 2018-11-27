@@ -15,7 +15,7 @@
 #SBATCH --mem=40GB
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=francisca.samsingpedrals@csiro.au
-#SBATCH --output=../Logs/star_with_tophat_settings_%A.out
+#SBATCH --output=../Logs/star_%A.out
 #SBATCH --array=0-14
 
 
