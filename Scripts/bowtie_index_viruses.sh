@@ -23,7 +23,7 @@ module load bowtie/2.2.9
 #INPDIR=/OSM/CBR/AF_POMV/work/POMV_RNA_seq/Genomes/POMV_genome_AAHL
 INPDIR=/OSM/CBR/AF_POMV/work/POMV_RNA_seq/Genomes/ISA_genome
 #OUTDIR=/flush3/sam079/RNAseq-POMV/ViralGenomeIndex/POMVGenomeIndex
-OUTDIR=/flush3/sam079/RNAseq-POMV/ViralGenomeIndex/ISAGenomeIndex
+OUTDIR=/flush3/sam079/RNAseq-POMV/ViralGenomeIndex/ISAVGenomeIndex
 
 
 #bowtie2-build ${INPDIR}/POMV_14_01514_ORF.fa ${OUTDIR}/POMV

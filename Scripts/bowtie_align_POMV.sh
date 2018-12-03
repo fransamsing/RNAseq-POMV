@@ -23,8 +23,10 @@ module load bowtie/2.2.9
 
 # Working Directories
 INPDIR=/OSM/CBR/AF_POMV/work/POMV_RNA_seq/Data
-REFDIR=/flush3/sam079/RNAseq-POMV/ViralGenomeIndex/POMVGenomeIndex
-OUTDIR=/flush3/sam079/RNAseq-POMV/Processed/Alignment/AlignPOMVGenome
+#REFDIR=/flush3/sam079/RNAseq-POMV/ViralGenomeIndex/POMVGenomeIndex
+REFDIR=/flush3/sam079/RNAseq-POMV/ViralGenomeIndex/ISAVGenomeIndex
+#OUTDIR=/flush3/sam079/RNAseq-POMV/Processed/Alignment/AlignPOMVGenome
+OUTDIR=/flush3/sam079/RNAseq-POMV/Processed/Alignment/AlignISAVGenome
 
 SAMPLES=( $(cut -d , -f 1 ../STARInputList.csv) );
 INFILES_R1_LIST=( $(cut -d , -f 2 ../STARInputList.csv) );
@@ -35,7 +37,7 @@ then
     i=$SLURM_ARRAY_TASK_ID
     INFILES_R1=${INPDIR}/${INFILES_R1_LIST[$i]}
     INFILES_R2=${INPDIR}/${INFILES_R2_LIST[$i]}
-    bowtie2 -p 8 -x ${REFDIR}/POMV -1 ${INFILES_R1} -2 ${INFILES_R2} -S ${OUTDIR}/${SAMPLES[$i]}.sam 
+    (bowtie2 -p 8 -x ${REFDIR}/ISAV -1 ${INFILES_R1} -2 ${INFILES_R2} -S ${OUTDIR}/${SAMPLES[$i]}.sam) 2> ${OUTDIR}/${SAMPLES[$i]}.log 
 else
     echo "Error: Missing array index as SLURM_ARRAY_TASK_ID"
 fi
