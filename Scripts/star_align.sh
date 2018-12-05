@@ -27,7 +27,7 @@ module load star
 INPDIR=/OSM/CBR/AF_POMV/work/POMV_RNA_seq/Data
 ANODIR=/OSM/CBR/AF_POMV/work/POMV_RNA_seq/Genomes/Salmo_salar
 REFDIR=/flush3/sam079/RNAseq-POMV/GenomeIndex/Star
-OUTDIR=/flush3/sam079/RNAseq-POMV/Processed/Alignment/AlignSalmonGenomeStar/STAR
+OUTDIR=/flush3/sam079/RNAseq-POMV/Processed/Alignment/AlignSalmonGenome/Star
 
 SAMPLES=( $(cut -d , -f 1 ../STARInputList.csv) );
 INFILES_R1=( $(cut -d , -f 2 ../STARInputList.csv) );
@@ -59,4 +59,3 @@ fi
 ## PARAMETER TWEAKING:
 ## --outFilterMismatchNmax 999 (or no filter) is the default for STAR. Set to 10 for better results following Ian's sugges## tion or set to 2 to simulate TOPHAT'S defaults setting 
 ## --outFilterMultimapNmax 20 is the default for STAR and TOPHAT. Set to 10 for better results following Ian's suggestion
-

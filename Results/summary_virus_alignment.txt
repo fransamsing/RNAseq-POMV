@@ -1,0 +1,210 @@
+NEGcontrolR1
+60785352 + 0 in total (QC-passed reads + QC-failed reads)
+0 + 0 secondary
+0 + 0 supplementary
+0 + 0 duplicates
+121 + 0 mapped (0.00% : N/A)
+60785352 + 0 paired in sequencing
+30392676 + 0 read1
+30392676 + 0 read2
+4 + 0 properly paired (0.00% : N/A)
+4 + 0 with itself and mate mapped
+117 + 0 singletons (0.00% : N/A)
+0 + 0 with mate mapped to a different chr
+0 + 0 with mate mapped to a different chr (mapQ>=5)
+NEGcontrolR2
+67028710 + 0 in total (QC-passed reads + QC-failed reads)
+0 + 0 secondary
+0 + 0 supplementary
+0 + 0 duplicates
+1862 + 0 mapped (0.00% : N/A)
+67028710 + 0 paired in sequencing
+33514355 + 0 read1
+33514355 + 0 read2
+1182 + 0 properly paired (0.00% : N/A)
+1246 + 0 with itself and mate mapped
+616 + 0 singletons (0.00% : N/A)
+2 + 0 with mate mapped to a different chr
+2 + 0 with mate mapped to a different chr (mapQ>=5)
+NEGcontrolR3
+63189448 + 0 in total (QC-passed reads + QC-failed reads)
+0 + 0 secondary
+0 + 0 supplementary
+0 + 0 duplicates
+951 + 0 mapped (0.00% : N/A)
+63189448 + 0 paired in sequencing
+31594724 + 0 read1
+31594724 + 0 read2
+568 + 0 properly paired (0.00% : N/A)
+618 + 0 with itself and mate mapped
+333 + 0 singletons (0.00% : N/A)
+0 + 0 with mate mapped to a different chr
+0 + 0 with mate mapped to a different chr (mapQ>=5)
+POMV6HPIR1
+69109588 + 0 in total (QC-passed reads + QC-failed reads)
+0 + 0 secondary
+0 + 0 supplementary
+0 + 0 duplicates
+1631920 + 0 mapped (2.36% : N/A)
+69109588 + 0 paired in sequencing
+34554794 + 0 read1
+34554794 + 0 read2
+1470392 + 0 properly paired (2.13% : N/A)
+1541522 + 0 with itself and mate mapped
+90398 + 0 singletons (0.13% : N/A)
+3668 + 0 with mate mapped to a different chr
+1971 + 0 with mate mapped to a different chr (mapQ>=5)
+POMV6HPIR2
+69071426 + 0 in total (QC-passed reads + QC-failed reads)
+0 + 0 secondary
+0 + 0 supplementary
+0 + 0 duplicates
+1435164 + 0 mapped (2.08% : N/A)
+69071426 + 0 paired in sequencing
+34535713 + 0 read1
+34535713 + 0 read2
+1297244 + 0 properly paired (1.88% : N/A)
+1356976 + 0 with itself and mate mapped
+78188 + 0 singletons (0.11% : N/A)
+3024 + 0 with mate mapped to a different chr
+1659 + 0 with mate mapped to a different chr (mapQ>=5)
+POMV6HPIR3
+66754858 + 0 in total (QC-passed reads + QC-failed reads)
+0 + 0 secondary
+0 + 0 supplementary
+0 + 0 duplicates
+1367480 + 0 mapped (2.05% : N/A)
+66754858 + 0 paired in sequencing
+33377429 + 0 read1
+33377429 + 0 read2
+1225216 + 0 properly paired (1.84% : N/A)
+1291364 + 0 with itself and mate mapped
+76116 + 0 singletons (0.11% : N/A)
+3196 + 0 with mate mapped to a different chr
+1636 + 0 with mate mapped to a different chr (mapQ>=5)
+ISAV6HPIR1
+58300076 + 0 in total (QC-passed reads + QC-failed reads)
+0 + 0 secondary
+0 + 0 supplementary
+0 + 0 duplicates
+690 + 0 mapped (0.00% : N/A)
+58300076 + 0 paired in sequencing
+29150038 + 0 read1
+29150038 + 0 read2
+526 + 0 properly paired (0.00% : N/A)
+564 + 0 with itself and mate mapped
+126 + 0 singletons (0.00% : N/A)
+0 + 0 with mate mapped to a different chr
+0 + 0 with mate mapped to a different chr (mapQ>=5)
+ISAV6HPIR2
+61425218 + 0 in total (QC-passed reads + QC-failed reads)
+0 + 0 secondary
+0 + 0 supplementary
+0 + 0 duplicates
+128 + 0 mapped (0.00% : N/A)
+61425218 + 0 paired in sequencing
+30712609 + 0 read1
+30712609 + 0 read2
+10 + 0 properly paired (0.00% : N/A)
+10 + 0 with itself and mate mapped
+118 + 0 singletons (0.00% : N/A)
+0 + 0 with mate mapped to a different chr
+0 + 0 with mate mapped to a different chr (mapQ>=5)
+ISAV6HPIR3
+65145142 + 0 in total (QC-passed reads + QC-failed reads)
+0 + 0 secondary
+0 + 0 supplementary
+0 + 0 duplicates
+107 + 0 mapped (0.00% : N/A)
+65145142 + 0 paired in sequencing
+32572571 + 0 read1
+32572571 + 0 read2
+0 + 0 properly paired (0.00% : N/A)
+0 + 0 with itself and mate mapped
+107 + 0 singletons (0.00% : N/A)
+0 + 0 with mate mapped to a different chr
+0 + 0 with mate mapped to a different chr (mapQ>=5)
+POMV24HPIR1
+65715192 + 0 in total (QC-passed reads + QC-failed reads)
+0 + 0 secondary
+0 + 0 supplementary
+0 + 0 duplicates
+36215695 + 0 mapped (55.11% : N/A)
+65715192 + 0 paired in sequencing
+32857596 + 0 read1
+32857596 + 0 read2
+32578444 + 0 properly paired (49.58% : N/A)
+33916850 + 0 with itself and mate mapped
+2298845 + 0 singletons (3.50% : N/A)
+78936 + 0 with mate mapped to a different chr
+63567 + 0 with mate mapped to a different chr (mapQ>=5)
+POMV24HPIR2
+63357558 + 0 in total (QC-passed reads + QC-failed reads)
+0 + 0 secondary
+0 + 0 supplementary
+0 + 0 duplicates
+35636464 + 0 mapped (56.25% : N/A)
+63357558 + 0 paired in sequencing
+31678779 + 0 read1
+31678779 + 0 read2
+31698080 + 0 properly paired (50.03% : N/A)
+34122938 + 0 with itself and mate mapped
+1513526 + 0 singletons (2.39% : N/A)
+42108 + 0 with mate mapped to a different chr
+17647 + 0 with mate mapped to a different chr (mapQ>=5)
+POMV24HPIR3
+59516246 + 0 in total (QC-passed reads + QC-failed reads)
+0 + 0 secondary
+0 + 0 supplementary
+0 + 0 duplicates
+33183733 + 0 mapped (55.76% : N/A)
+59516246 + 0 paired in sequencing
+29758123 + 0 read1
+29758123 + 0 read2
+29757762 + 0 properly paired (50.00% : N/A)
+31376520 + 0 with itself and mate mapped
+1807213 + 0 singletons (3.04% : N/A)
+50210 + 0 with mate mapped to a different chr
+33312 + 0 with mate mapped to a different chr (mapQ>=5)
+ISAV24HPIR1
+74708594 + 0 in total (QC-passed reads + QC-failed reads)
+0 + 0 secondary
+0 + 0 supplementary
+0 + 0 duplicates
+186 + 0 mapped (0.00% : N/A)
+74708594 + 0 paired in sequencing
+37354297 + 0 read1
+37354297 + 0 read2
+48 + 0 properly paired (0.00% : N/A)
+50 + 0 with itself and mate mapped
+136 + 0 singletons (0.00% : N/A)
+0 + 0 with mate mapped to a different chr
+0 + 0 with mate mapped to a different chr (mapQ>=5)
+ISAV24HPIR2
+65489108 + 0 in total (QC-passed reads + QC-failed reads)
+0 + 0 secondary
+0 + 0 supplementary
+0 + 0 duplicates
+140 + 0 mapped (0.00% : N/A)
+65489108 + 0 paired in sequencing
+32744554 + 0 read1
+32744554 + 0 read2
+18 + 0 properly paired (0.00% : N/A)
+18 + 0 with itself and mate mapped
+122 + 0 singletons (0.00% : N/A)
+0 + 0 with mate mapped to a different chr
+0 + 0 with mate mapped to a different chr (mapQ>=5)
+ISAV24HPIR3
+53525456 + 0 in total (QC-passed reads + QC-failed reads)
+0 + 0 secondary
+0 + 0 supplementary
+0 + 0 duplicates
+90 + 0 mapped (0.00% : N/A)
+53525456 + 0 paired in sequencing
+26762728 + 0 read1
+26762728 + 0 read2
+0 + 0 properly paired (0.00% : N/A)
+0 + 0 with itself and mate mapped
+90 + 0 singletons (0.00% : N/A)
+0 + 0 with mate mapped to a different chr
+0 + 0 with mate mapped to a different chr (mapQ>=5)

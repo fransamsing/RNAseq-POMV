@@ -37,7 +37,6 @@ library(genefilter)
 library(pheatmap)
 ```
 
-
 ### Load raw counts
 
 ```{r, include=FALSE}
@@ -186,7 +185,6 @@ morecols <- colorRampPalette(mypalette)
 par(oma=c(1,0,0,0))
 heatmap.2(highly_variable_lcpm,col=rev(morecols(50)),trace="none",scale="row")
 ```
-
 
 > Hierarchical clustering with heatmaps for the top 500 genes with the highest variance
 
@@ -393,10 +391,8 @@ ggplot(res_table2) +
 
 ```{r}
 ## MA Plots
-
 myColors <- c("#A1D76A", "#E9A3C9")
-plotMA(fit.cont,coef=1,status=summa.fit[,"ControlvsPOMV6"], hl.col=myColors, cex = 0.3, legend = FALSE, main = 'Control vs POMV6', alpha = 0.5)
-
+limma::plotMA(fit.cont,coef=1,status=summa.fit[,"ControlvsPOMV6"], hl.col=myColors, cex = 0.3, legend = FALSE, main = 'Control vs POMV6', alpha = 0.5)
 ```
 
 ```{r}
@@ -454,22 +450,41 @@ ControlvsISAV24_ALL_ann <- merge(ControlvsISAV24_ALL, ann, by.x=0, by.y="SYMBOL"
 # Write tables to results
 #write.table(ControlvsPOMV6_UP_ann, 'Results/ControlvsPOMV6_UP.csv', row.names = FALSE, sep = ",")
 #write.table(ControlvsPOMV6_DOWN_ann, 'Results/ControlvsPOMV6_DOWN.csv', row.names = FALSE, sep = ",")
-write.table(ControlvsPOMV6_ALL_ann, 'Results/ControlvsPOMV6_ALL.csv', row.names = FALSE, sep = ",")
+#write.table(ControlvsPOMV6_ALL_ann, 'Results/ControlvsPOMV6_ALL.csv', row.names = FALSE, sep = ",")
 
 #write.table(ControlvsPOMV24_UP_ann, 'Results/ControlvsPOMV24_UP.csv', row.names = FALSE, sep = ",")
 #write.table(ControlvsPOMV24_DOWN_ann, 'Results/ControlvsPOMV24_DOWN.csv', row.names = FALSE, sep = ",")
-write.table(ControlvsPOMV24_ALL_ann, 'Results/ControlvsPOMV24_ALL.csv', row.names = FALSE, sep = ",")
+#write.table(ControlvsPOMV24_ALL_ann, 'Results/ControlvsPOMV24_ALL.csv', row.names = FALSE, sep = ",")
 
 #write.table(ControlvsISAV6_UP_ann, 'Results/RNA_seq/ControlvsISAV6_UP.csv', row.names = FALSE, sep = ",")
 #write.table(ControlvsISAV6_DOWN_ann, 'Results/RNA_seq/ControlvsISAV6_DOWN.csv', row.names = FALSE, sep = ",")
-write.table(ControlvsISAV6_ALL_ann, 'Results/ControlvsISAV6_ALL.csv', row.names = FALSE, sep = ",")
+#write.table(ControlvsISAV6_ALL_ann, 'Results/ControlvsISAV6_ALL.csv', row.names = FALSE, sep = ",")
 
 #write.table(ControlvsISAV24_UP_ann, 'Results/ControlvsISAV24_UP.csv', row.names = FALSE, sep = ",")
 #write.table(ControlvsISAV24_DOWN_ann, 'Results/ControlvsISAV24_DOWN.csv', row.names = FALSE, sep = ",")
-write.table(ControlvsISAV24_ALL_ann, 'Results/ControlvsISAV24_ALL.csv', row.names = FALSE, sep = ",")
+#write.table(ControlvsISAV24_ALL_ann, 'Results/ControlvsISAV24_ALL.csv', row.names = FALSE, sep = ",")
 ```
 
 
+## Open the files just create to make some nice, publication quality plots 
+
+```{r}
+library(dplyr)
+data <- topTable(fit = fit.cont, sort.by="F",n=100)
+data <- add_rownames(data, "SYMBOL")
+data <- data[data$adj.P.Val < 0.05,]
+data_ann <- merge(data, ann, by="SYMBOL")
+```
+
+```{r}
+library(squash)
+my_palette <- colorRampPalette(c("blue", "red"))(n = 1000)
+
+rnames <- data_ann$ENTREZID
+mat_data <- data.matrix(data_ann[,2:5])
+rownames(mat_data) <- rnames
+pheatmap::pheatmap(mat_data, cellwidth = 20, border_color = NA)
+```
 
 
 

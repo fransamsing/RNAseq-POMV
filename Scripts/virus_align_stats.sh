@@ -11,7 +11,7 @@
 #SBATCH --time=02:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=8
+#SBATCH --cpus-per-task=1
 #SBATCH --mem=10GB
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=francisca.samsingpedrals@csiro.au
@@ -28,6 +28,7 @@ module load bedtools/2.26.0
 # Working Directories
 INPDIR=/flush3/sam079/RNAseq-POMV/Processed/Alignment/AlignPOMVGenome
 SAMPLES=( $(cut -d , -f 1 ../STARInputList.csv) );
+SCALE=( $(cut -d , -f 3 ../Results/summary_virus_alignment.csv) )
 
 if [ ! -z "$SLURM_ARRAY_TASK_ID" ]
 then
@@ -35,7 +36,10 @@ then
 	samtools view -bS ${INPDIR}/${SAMPLES[$i]}.sam > ${INPDIR}/${SAMPLES[$i]}.bam
 	samtools sort ${INPDIR}/${SAMPLES[$i]}.bam ${INPDIR}/${SAMPLES[$i]}.sorted
 	bamToBed -i ${INPDIR}/${SAMPLES[$i]}.sorted.bam > ${INPDIR}/${SAMPLES[$i]}.sorted.bed
-	genomeCoverageBed -i ${INPDIR}/${SAMPLES[$i]}.sorted.bed -g ../POMV_sequences.txt -dz > ${INPDIR}/${SAMPLES[$i]}_coverage.txt
+	genomeCoverageBed -i ${INPDIR}/${SAMPLES[$i]}.sorted.bed -g ../POMV_sequences.txt -d > ${INPDIR}/${SAMPLES[$i]}_coverage.txt -scale ${SCALE[$i]}
 else
     echo "Error: Missing array index as SLURM_ARRAY_TASK_ID"
 fi
+
+
+## After running copy files to ~/RNAseq-POMV/Data

@@ -213,10 +213,6 @@ plotDendrograms = FALSE, xLabelsAngle = 90)
 ## Export networks to cytoscape
 
 
-```
-
-
-
 ```{r}
 # Select modules
 modules <- c("cyan", "greenyellow")
@@ -228,7 +224,6 @@ modGenes = ann$GID[match(modProbes, ann$GID)]
 # Select the corresponding Topological Overlap
 modTOM <- w[inModule, inModule]
 ```
-
 
 
 ```{r}
@@ -245,14 +240,6 @@ altNodeNames = modGenes,
 nodeAttr = moduleColors[inModule])
 
 ```
-
-
-
-
-
-
-
-
 
 
 

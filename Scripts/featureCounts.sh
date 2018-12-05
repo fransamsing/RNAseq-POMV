@@ -2,7 +2,7 @@
 
 #***************************************************************#
 #                  Building read counts matrix                  #
-#             STEP XX in STAR-FeatureCounts pipeline            #
+#             STEP 3 in STAR-FeatureCounts pipeline             #
 #***************************************************************#
 
 #--------------------------sbatch header------------------------#
@@ -21,14 +21,18 @@ module load subread
 
 # Working Directories
 REFDIR=/OSM/CBR/AF_POMV/work/POMV_RNA_seq/Genomes/Salmo_salar 
-INPDIR=/flush3/sam079/RNAseq-POMV/Processed/Alignment/AlignSalmonGenomeStar/STAR
+INPDIR=/flush3/sam079/RNAseq-POMV/Processed/Alignment/AlignSalmonGenome/Star
 OUTDIR=/flush3/sam079/RNAseq-POMV/Processed/Expression/Read_counts
 
 featureCounts -T 8 -p -t exon \
 -g gene \
 -a ${REFDIR}/GCF_000233375.1_ICSASG_v2_genomic.gff \
 -o ${OUTDIR}/read_counts.txt \
-${INPDIR}/*Aligned.sortedByCoord.out.bam \ 
+${INPDIR}/*Aligned.sortedByCoord.out.bam
 
-# after creating the file, I cleaned and saved as by running: 
-# cut -f 1,7-15 read_counts.txt >  read_counts_clean.txt
+
+## After running I cleaned the txt files with the following code
+## OUTDIR=/flush3/sam079/RNAseq-POMV/Processed/Expression/Read_counts
+## MVDIR=/home/sam079/RNAseq-POMV/Data
+## cat ${OUTDIR}/read_counts.txt | tail -n +2 | cut -f 1,7-21 > ${OUTDIR}/read_counts_clean.txt
+## cp ${OUTDIR}/read_counts_clean.txt ${MVDIR}/read_counts_clean.txt

@@ -1,0 +1,5 @@
+bedtools(9):ERROR:105: Unable to locate a modulefile for 'bedtools/2.19.1'
+[samopen] SAM header is present: 10 sequences.
+[bam_sort_core] merging from 29 files...
+/cm/local/apps/slurm/var/spool/job10891067/slurm_script: line 35: bamToBed: command not found
+/cm/local/apps/slurm/var/spool/job10891067/slurm_script: line 36: genomeCoverageBed: command not found

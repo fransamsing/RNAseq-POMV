@@ -1,4 +1,4 @@
-#!/bin/bash
+ #!/bin/bash
 
 #***************************************************************#
 #    		 Generate the Salmon Genome Index               #
@@ -43,6 +43,4 @@ STAR \
 # Genome Length = 2966890203 (grep -v '^>' GCF_000233375.1_ICSASG_v2_genomic.fna | tr -d '\n' | wc -c)
 # NumberOfReferences = 232155 (grep -c '^>' GCF_000233375.1_ICSASG_v2_genomic.fna)
 
-# Fixed annotation file 
-#gffread -T GCF_000233375.1_ICSASG_v2_genomic.gff -o Salmon_genome_annotation.gtf 
 
