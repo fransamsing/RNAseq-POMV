@@ -17,7 +17,7 @@
 #SBATCH --mail-user=francisca.samsingpedrals@csiro.au
 #SBATCH --output=../Logs/feature_counts_%A.out
 
-module load subread
+module load subread/1.6.2
 
 # Working Directories
 REFDIR=/OSM/CBR/AF_POMV/work/POMV_RNA_seq/Genomes/Salmo_salar 

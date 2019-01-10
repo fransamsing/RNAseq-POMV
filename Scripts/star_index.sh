@@ -17,7 +17,7 @@
 #SBATCH --mail-user=francisca.samsingpedrals@csiro.au
 #SBATCH --output=../Logs/star_%A.out
 
-module load star
+module load star/2.5.3a
 
 # Working Dictories 
 FILE_DIR=/OSM/CBR/AF_POMV/work/POMV_RNA_seq

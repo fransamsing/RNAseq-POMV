@@ -18,11 +18,11 @@
 
 #----------------------project variables------------------------# 
 IN_DIR=/OSM/CBR/AF_POMV/work/POMV_RNA_seq/Data
-OUT_DIR=/OSM/CBR/AF_POMV/work/POMV_RNA_seq/Analysis/FastQC
+OUT_DIR=/OSM/CBR/AF_POMV/work/POMV_RNA_seq/Results/01_FastQC
 
 #---------------------------------------------------------------#
 
-module load fastqc
+module load fastqc/0.11.5
 
 IN_FILE_LIST=( $(cut -d , -f 1 ../METADATA.csv | grep -v sample_id) );
 

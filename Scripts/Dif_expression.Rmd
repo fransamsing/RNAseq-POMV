@@ -137,8 +137,6 @@ abline(h=median(logcounts),col="blue")
 title("Boxplots of logCPMs (unnormalised)")
 ```
 
-We will normalize our data using the TMM (trimmed mean of M) method. 
-
 ```{r}
 # Normalization using TMM method
 # TMM normalization is performed to eliminate composition biases between libraries.
@@ -418,6 +416,7 @@ columns(salmodb)
 ```{r}
 ann <-  AnnotationDbi::select(salmodb, keys=rownames(fit.cont), columns=c("ENTREZID","GENENAME"), keytype = "SYMBOL")
 head(ann, 10)
+#write.table(ann, 'Results/gene_universe.csv', row.names = FALSE, sep = ",")
 ```
 
 ```{r, include = FALSE}
@@ -448,20 +447,12 @@ ControlvsISAV24_ALL_ann <- merge(ControlvsISAV24_ALL, ann, by.x=0, by.y="SYMBOL"
 
 ```{r, include=FALSE}
 # Write tables to results
-#write.table(ControlvsPOMV6_UP_ann, 'Results/ControlvsPOMV6_UP.csv', row.names = FALSE, sep = ",")
-#write.table(ControlvsPOMV6_DOWN_ann, 'Results/ControlvsPOMV6_DOWN.csv', row.names = FALSE, sep = ",")
 #write.table(ControlvsPOMV6_ALL_ann, 'Results/ControlvsPOMV6_ALL.csv', row.names = FALSE, sep = ",")
 
-#write.table(ControlvsPOMV24_UP_ann, 'Results/ControlvsPOMV24_UP.csv', row.names = FALSE, sep = ",")
-#write.table(ControlvsPOMV24_DOWN_ann, 'Results/ControlvsPOMV24_DOWN.csv', row.names = FALSE, sep = ",")
 #write.table(ControlvsPOMV24_ALL_ann, 'Results/ControlvsPOMV24_ALL.csv', row.names = FALSE, sep = ",")
 
-#write.table(ControlvsISAV6_UP_ann, 'Results/RNA_seq/ControlvsISAV6_UP.csv', row.names = FALSE, sep = ",")
-#write.table(ControlvsISAV6_DOWN_ann, 'Results/RNA_seq/ControlvsISAV6_DOWN.csv', row.names = FALSE, sep = ",")
 #write.table(ControlvsISAV6_ALL_ann, 'Results/ControlvsISAV6_ALL.csv', row.names = FALSE, sep = ",")
 
-#write.table(ControlvsISAV24_UP_ann, 'Results/ControlvsISAV24_UP.csv', row.names = FALSE, sep = ",")
-#write.table(ControlvsISAV24_DOWN_ann, 'Results/ControlvsISAV24_DOWN.csv', row.names = FALSE, sep = ",")
 #write.table(ControlvsISAV24_ALL_ann, 'Results/ControlvsISAV24_ALL.csv', row.names = FALSE, sep = ",")
 ```
 
@@ -470,22 +461,14 @@ ControlvsISAV24_ALL_ann <- merge(ControlvsISAV24_ALL, ann, by.x=0, by.y="SYMBOL"
 
 ```{r}
 library(dplyr)
-data <- topTable(fit = fit.cont, sort.by="F",n=100)
+data <- topTable(fit = fit.cont, sort.by="F", n = 20000)
 data <- add_rownames(data, "SYMBOL")
 data <- data[data$adj.P.Val < 0.05,]
 data_ann <- merge(data, ann, by="SYMBOL")
+all_data_ann <- na.omit(data_ann)
+
+#write.table(all_data_ann, 'Results/Differential_Expression_ALL.csv', row.names = FALSE, sep = ",")
 ```
-
-```{r}
-library(squash)
-my_palette <- colorRampPalette(c("blue", "red"))(n = 1000)
-
-rnames <- data_ann$ENTREZID
-mat_data <- data.matrix(data_ann[,2:5])
-rownames(mat_data) <- rnames
-pheatmap::pheatmap(mat_data, cellwidth = 20, border_color = NA)
-```
-
 
 
 

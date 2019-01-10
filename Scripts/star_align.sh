@@ -21,7 +21,7 @@
 
 module load jemalloc
 export OMP_NUM_THREADS=$SLURM_NTASKS_PER_NODE
-module load star
+module load star/2.5.3a
 
 # Working Dictories 
 INPDIR=/OSM/CBR/AF_POMV/work/POMV_RNA_seq/Data
@@ -59,3 +59,5 @@ fi
 ## PARAMETER TWEAKING:
 ## --outFilterMismatchNmax 999 (or no filter) is the default for STAR. Set to 10 for better results following Ian's sugges## tion or set to 2 to simulate TOPHAT'S defaults setting 
 ## --outFilterMultimapNmax 20 is the default for STAR and TOPHAT. Set to 10 for better results following Ian's suggestion
+
+
