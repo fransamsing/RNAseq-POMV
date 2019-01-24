@@ -29,4 +29,4 @@ OUTDIR=/flush3/sam079/RNAseq-POMV/ViralGenomeIndex/POMVNewGenomeIndex
 
 #bowtie2-build ${INPDIR}/POMV_14_01514_ORF.fa ${OUTDIR}/POMV
 #bowtie2-build ${INPDIR}/ISA_Glesvaer_2_90_ORF.fa ${OUTDIR}/ISAV
-bowtie2-build ${INPDIR}/POMV_14_01514_GENOME_format.fa ${OUTDIR}/POMV
+bowtie2-build ${INPDIR}/POMV_14_01514_New_GENOME_format.fa ${OUTDIR}/POMV
