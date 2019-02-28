@@ -1,4 +1,0 @@
-/cm/local/apps/slurm/var/spool/job2540087/slurm_script: line 20: Module: command not found
-/cm/local/apps/slurm/var/spool/job2540087/slurm_script: line 29: INPDIR: command not found
-/cm/local/apps/slurm/var/spool/job2540087/slurm_script: line 29: OUTDIR: command not found
-/cm/local/apps/slurm/var/spool/job2540087/slurm_script: line 29: bowtie2-build: command not found

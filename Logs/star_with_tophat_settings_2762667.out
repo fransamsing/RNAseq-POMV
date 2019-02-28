@@ -1,8 +1,0 @@
-Sep 11 13:29:15 ..... started STAR run
-Sep 11 13:29:15 ..... loading genome
-
-EXITING because of FATAL ERROR: could not open genome file /flush3/sam079/RNAseq-POMV/GenomeIndex//genomeParameters.txt
-SOLUTION: check that the path to genome files, specified in --genomeDir is correct and the files are present, and have user read permsissions
-
-Sep 11 13:29:15 ...... FATAL ERROR, exiting
-/cm/local/apps/slurm/var/spool/job2762667/slurm_script: line 47: --outSAMtype: command not found
