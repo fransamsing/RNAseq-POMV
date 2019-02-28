@@ -2,21 +2,16 @@
 #                          README                                #
 ##################################################################
 
-Hello, I am your friend! 
 
-I will explain the future you, or the future personthat has too look at this directory and these scripts,
- what is in it, and what is the worflow that I (Francisca Samsing 2018) have used to analyse my RNA sequencing data
+The following directory contains all shell scripts necessary for the analysis of an RNAseq experiment, mainly alignment using star and de novo assembly of a viral genome using Trinity and SPAdes. 
 
-The RAW data for this project is stored in a Bowen Cloud. The full path to that cloud from Pearcey is: 
-/OSM/CBR/AF_POMV/work/POMV_RNA_seq
+Feature counts was used to count reads mapped to the genome, and the raw counts were later using in the Limma-voom pipeline for differential expression analysis. This is contained in the Differential expression directory. 
 
+Directory structure: 
 
+/Scripts 
 
-
-
-
-
-
+The scripts directory contains all the scripts to perform the alignment and read counts of raw reads from RNAseq experiment. The pipeline used in this analysis is presented as an image in the /Docs directory
 
 
 

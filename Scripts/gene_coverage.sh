@@ -36,8 +36,9 @@ INPDIR=/flush3/sam079/RNAseq-POMV/Processed/Alignment/AlignPOMVNewGenome
 OUTDIR=/home/sam079/RNAseq-POMV/Data
 SAMPLES=( $(cut -d , -f 1 ../STARInputList.csv) );
 
-SCALE=( $(cut -d , -f 4 ../Results/summary_virus_alignment_POMV.csv) )
+#SCALE=( $(cut -d , -f 4 ../Results/summary_virus_alignment_POMV.csv) )
 #SCALE=( $(cut -d , -f 4 ../Results/summary_virus_alignment_ISAV.csv) )
+SCALE=( $(cut -d , -f 4 ../Results/summary_virus_alignment_new_POMV.csv) )
 
 if [ ! -z "$SLURM_ARRAY_TASK_ID" ]
 then
@@ -49,7 +50,7 @@ else
     echo "Error: Missing array index as SLURM_ARRAY_TASK_ID"
 fi
 
-## After running copy files to ~/RNAseq-POMV/Data
+
 
 
 
