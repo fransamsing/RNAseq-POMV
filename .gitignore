@@ -3,3 +3,6 @@
 .RData
 .Ruserdata
 ._*
+/Logs/*
+/Data/*
+/Results/*
