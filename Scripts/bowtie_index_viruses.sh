@@ -15,6 +15,8 @@
 #SBATCH --mail-user=francisca.samsingpedrals@csiro.au
 #SBATCH --output=../Logs/bowtie_index_%A.out
 
+#---------------------------------------------------------------#
+
 
 module load bowtie/2.2.9
 
@@ -23,10 +25,12 @@ INPDIR=/OSM/CBR/AF_POMV/work/POMV_RNA_seq/Genomes/POMV_genome_AAHL
 #INPDIR=/OSM/CBR/AF_POMV/work/POMV_RNA_seq/Genomes/ISA_genome
 
 #OUTDIR=/flush3/sam079/RNAseq-POMV/ViralGenomeIndex/POMVGenomeIndex
-#OUTDIR=/flush3/sam079/RNAseq-POMV/ViralGenomeIndex/ISAVGenomeIndex
 OUTDIR=/flush3/sam079/RNAseq-POMV/ViralGenomeIndex/POMVNewGenomeIndex
+#OUTDIR=/flush3/sam079/RNAseq-POMV/ViralGenomeIndex/ISAVGenomeIndex
+#OUTDIR=/flush3/sam079/RNAseq-POMV/ViralGenomeIndex/ISAVORFIndex
 
 
 #bowtie2-build ${INPDIR}/POMV_14_01514_ORF.fa ${OUTDIR}/POMV
-#bowtie2-build ${INPDIR}/ISA_Glesvaer_2_90_ORF.fa ${OUTDIR}/ISAV
 bowtie2-build ${INPDIR}/POMV_14_01514_New_GENOME_format.fa ${OUTDIR}/POMV
+#bowtie2-build ${INPDIR}/ISA_Glesvaer_2_90_GENOME.fa ${OUTDIR}/ISAV
+#bowtie2-build ${INPDIR}/ISA_Glesvaer_2_90_ORF.fa ${OUTDIR}/ISAV

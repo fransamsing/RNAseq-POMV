@@ -22,7 +22,7 @@
 
 module load jemalloc
 export OMP_NUM_THREADS=$SLURM_NTASKS_PER_NODE
-module load samtools/0.1.19
+module load samtools/1.3.1
 module load bedtools/2.26.0
 
 # Working Directories
